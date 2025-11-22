@@ -1,0 +1,86 @@
+[
+  {
+    "id": "carousel-basics",
+    "title": "carosuel basics",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n.widget.skin70 .cpSlider{\n    display:flex;\n}\n.widget.skin45 .cpCarousel .arrow {\n    opacity: 1;\n} \n\n.widget.skin45 .cpCarousel .arrow.prev:before {\n    background: url() no-repeat;\n    background-size: contain;\n}\n\n.widget.skin45 .cpCarousel .arrow.next:before {\n    background: url() no-repeat;\n    background-size: contain;\n}\n\n.widget.skin45 .cpCarousel .arrow.prev:after {\n    border-right: none;\n}\n\n.widget.skin45 .cpCarousel .arrow.next:after {\n    border-left: none;\n}\n\n.widget.skin45 .cpCarousel .arrow:before{\n    border-radius:0 !important;\n    height:35px;\n    width:35px;\n}"
+  },
+  {
+    "id": "slideshow-basics",
+    "title": "slideshow basics",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n.widget.skin29 .cpSlider .overlayInner{\n    padding:1em;\n    background:rgba(19, 75, 112, 0.9);\n}\n.row.outer.wide .widget.skin29 .cpSlider .overlayInner{\n    border-radius:10px;\n}\n.widget.skin29 .cpSlider .overlay{\n    max-width:750px;\n    background:rgba(19, 75, 112, 0);\n}"
+  },
+  {
+    "id": "flex-calendar",
+    "title": "flex calendar",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n.widget.skin74 .miniCalendar th{\n    width:100%;  \n}\n.widget.skin74 .miniCalendar td{\n    width:100%;\n}\n.widget.skin74 .miniCalendar tr{\n    display:flex;  \n    align-items:center; \n    justify-content:center;\n    flex-direction:row;\n}"
+  },
+  {
+    "id": "responsive-youtube",
+    "title": "Responsive Youtube",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n.widget.skin28 .widgetBody {\n    position: relative;\n    padding-bottom: 56.25%;\n    padding-top: 30px;\n    height: 0;\n    overflow: hidden;\n}\n\n.widget.skin28 .widgetBody iframe,\n.widget.skin28 .widgetBody object,\n.widget.skin28 .widgetBody embed {\n    position: absolute;\n    bottom: 50%;\n    left: 50%;\n    width: 100%;\n    height: 100%;\n    max-height: 410px !important;\n    transform: translate(-50%, 50%);\n}"
+  },
+  {
+    "id": "nav-basics",
+    "title": "Nav Basics",
+    "version": 1,
+    "readonly": false,
+    "code": "position:relative;\n}\n\n.wide .mainNavItem::after{\n    content:'';\n    position:absolute;\n    height:px;\n    width:px;\n    background-color:;\n    bottom:.8em;\n    left: 50%;\n    transform: translateX(-50%);\n    transition: all .3s ease-in-out;\n}\n\n.wide .mainNavItem:is(:hover, :focus, :active, .mouseover)::after {\n    width:;\n}"
+  },
+  {
+    "id": "footer-lines",
+    "title": "footer Lines",
+    "version": 1,
+    "readonly": false,
+    "code": "line-height:1.2;\nposition: relative;\n}\n\n.wide.widget.skin66 .row {\n    display: table;\n    margin: 0 auto;\n}\n\n.wide.widget.skin66 .col:not(.last) .widgetItem::after {\n    content: '';\n    position: absolute;\n    right: -2px;\n    top: 50%;\n    transform: translateY(-50%);\n    width: 1px;\n    height: 16px;\n    background: #212121;\n    vertical-align: bottom;\n}\n.widget.skin66 .pageStyles p{\n    margin:0;\n}"
+  },
+  {
+    "id": "mega-menu-radius",
+    "title": "mega menu - border with radius",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n\n.widget.skin73 .level1 > ol {\n}\n\n.widget.skin73 .level1 > ol {\n    margin-left: 0;\n}\n\n.widget.skin73 .level1 .megaMenuItem {\n    margin-left: 4px;\n    padding: 4px 0 4px 8px;\n    line-height: 1.3;\n    position:relative;\n    transition: all .2s ease-in-out;\n}\n.widget.skin73 .level1>ol{\n    position:relative;\n}\n.widget.skin73 .level1 .megaMenuItem::after,\n.widget.skin73 .level1>ol::after{\n    position:absolute;\n    content:\"\";\n    width:6px;\n    border-radius: 3px;\n    height:100%;\n    bottom:0;\n    z-index:1;\n    top:50%;\n    transform:translateY(-50%);\n    left:-4px;\n    background:#0D3D51;\n}\n.widget.skin73 .level1>ol::after{\n    left:0;\n    z-index:0;\n}\n.widget.skin73 .level1 .megaMenuItem:is(:hover, :focus, :active):after {\n    background:#4E9CA1;\n}"
+  },
+  {
+    "id": "header-after",
+    "title": "Header ::After",
+    "version": 1,
+    "readonly": false,
+    "code": "position:relative;\n}\n.widget.skin12 .widgetHeader:after{\n    position:absolute;\n    content:\"\";\n    width:74px;\n    height:3px;\n    bottom:-7px;\n    left:0;\n    background:#FED318;\n}\n.row.outer:not(.wide) .widget.skin12 .widgetHeader::after {\n    left: 50%;\n    transform: translateX(-50%);\n}"
+  },
+  {
+    "id": "feature-column",
+    "title": "Feature Column",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n\n@media (min-width: 63em) {\n    #featureColumn { \n        border-left: 1px solid #E4E4E4;\n        margin: 1.5em 0;\n    }\n}"
+  },
+  {
+    "id": "mega-menu-bullets",
+    "title": "mega menu - Bullests",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n\n.widget.skin62 .level1 > ol {\n    margin-left: 0;\n}\n\n.widget.skin62 .level1 .megaMenuItem {\n    margin-left: 4px;\n    padding: 4px 0 4px 8px;\n    line-height: 1.3;\n    position:relative;\n    transition: all .2s ease-in-out;\n}\n\n.widget.skin62 .level1 .megaMenuItem::after{\n    position:absolute;\n    content:\"\";\n    width:8px;\n    height:8px;\n    border-radius:50%;\n    bottom:0;\n    top:10px;\n    left:-6px;\n    background:#FFFCF7;\n}\n\n.widget.skin62 .level1 .megaMenuItem:is(:hover, :focus, :active):after {\n    background:#CEA35E;\n}"
+  },
+  {
+    "id": "mega-menu-border",
+    "title": "mega menu - border",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n\n.widget.skin10 .level1 > ol {\n    margin-left: 0;\n}\n\n.widget.skin10 .level1 .megaMenuItem {\n    margin-left: 4px;\n    padding: 4px 0 4px 8px;\n    line-height: 1.3;\n    border-left: 2px solid #3EA84F;\n    transition: all .2s ease-in-out;\n}\n.widget.skin10 .level1 .megaMenuItem:is(:hover, :focus, :active){\n    border-left: 2px solid #FED318;\n}"
+  },
+  {
+    "id": "carousel-height-readon",
+    "title": "carosuel - height matched w readon at bottom",
+    "version": 1,
+    "readonly": false,
+    "code": "display:flex;\nflex-direction:column;\n}\n.widget.skin154 .cpSlider{\n    display:flex;\n}\n.widget.skin154 .text{\n    padding:1em;\n    padding-bottom:0;\n    position:relative;\n    display:flex;\n    flex-direction:column;\n    height:100%;\n}\n.widget.skin154 .widgetDesc{\n    display:flex;\n    flex-direction:column;\n    justify-content:space-between;\n    height:100%;\n}"
+  }
+]
