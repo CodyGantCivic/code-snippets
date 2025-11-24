@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>CP Toolbox UI</title>
-  <!-- This file is intended to be hosted on GitHub (raw) and referenced by the userscript. The userscript will inject the HTML into the page DOM (you can fetch this file and take the inner content, or host only the CSS and let the script create DOM). -->
+  <!-- This file is intended to be hosted on GitHub (raw) and referenced by the userscript. -->
   <link rel="stylesheet" href="cp_toolbox.css" />
 </head>
 
@@ -17,34 +17,43 @@
         <!-- Logo SVG will be injected by the userscript (remote civicplus.svg) -->
         <span style="font-size: 12px; color: var(--cp-muted)">Loading logo…</span>
       </div>
-      <div class="btns">
-        <button class="add-snippet-btn" id="cp-add-btn">+ Add Snippet</button>
-        <button class="refresh-remote-btn" id="cp-refresh-btn">
-          Refresh Remote
-        </button>
+
+      <!-- Clickable actions header (dropdown) -->
+      <div class="btns" id="cp-btns" role="button" aria-haspopup="true" aria-expanded="false" tabindex="0">
+        <div class="btns-header" id="cp-btns-header" aria-hidden="true">
+          Actions <span class="chev" aria-hidden="true">▾</span>
+        </div>
+
+        <div class="btns-dropdown" id="cp-btns-dropdown" role="menu" aria-hidden="true">
+          <button class="add-snippet-btn" id="cp-add-btn" role="menuitem">+ Add Snippet</button>
+          <button class="refresh-remote-btn" id="cp-refresh-btn" role="menuitem">Refresh Remote</button>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="search-row">
-    <input id="cp-search-input" type="search" placeholder="Search title or code..." />
-    <button class="clear-btn" id="cp-clear-search">Clear</button>
-  </div>
-  <div id="cp-list"></div>
-  <div class="footer" style="
+
+    <!-- SEARCH ROW moved inside panel (keeps layout consistent) -->
+    <div class="search-row">
+      <input id="cp-search-input" type="search" placeholder="Search title or code..." />
+      <button class="clear-btn" id="cp-clear-search">Clear</button>
+    </div>
+
+    <div id="cp-list"></div>
+
+    <div class="footer" style="
           padding: 8px 4px;
           border-top: 1px solid #f1f5f9;
           display: flex;
           gap: 8px;
           align-items: center;
         ">
-    <div>Width:</div>
-    <input id="cp-width-input" type="number" value="420" min="220" max="900" style="
+      <div>Width:</div>
+      <input id="cp-width-input" type="number" value="420" min="220" max="900" style="
             width: 80px;
             padding: 6px;
             border-radius: 6px;
             border: 1px solid #e6eef9;
           " />
-  </div>
+    </div>
   </div>
 </body>
 
