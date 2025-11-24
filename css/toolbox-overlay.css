@@ -1,173 +1,67 @@
 :root{--cp-accent:rgb(204, 0, 32); --cp-muted:#667085;}
 #cp-toolbox-panel *{box-sizing:border-box;font-family:Inter,system-ui,Arial;}
-#cp-toolbox-panel{
-  position:fixed; left:0; top:0; bottom:0;
-  width:420px; background:#fff;
-  border-right:1px solid #e6edf8; z-index:2147483647;
-  display:none; overflow:auto; padding:8px;
-}
 
-.header{
-  display:flex; align-items:center; justify-content:center;
-  gap:12px; padding:10px 8px; border-bottom:1px solid #f1f5f9;
-}
-.logo{ display:flex; align-items:center; justify-content:center; }
-#cp-toolbox-panel svg{ height:64px; width:auto; display:block; max-width:100%; }
+.header .btns { display:flex; align-items:center; }
 
-/* btns area (now holds a dropdown) */
-.header .btns{ display:flex; gap:8px; align-items:center; }
-
-/* -------- Dropdown (details/summary) -------- */
+/* ---------------------------
+   DROPDOWN CONTAINER
+--------------------------- */
 .cp-dropdown {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* Remove default disclosure triangle and style the summary as a square button */
-.cp-dropdown summary {
-  list-style: none; /* hide triangle in some browsers */
-  -webkit-appearance: none;
-  appearance: none;
-  border: 1px solid rgba(0,0,0,0.06);
-  padding: 6px;
-  border-radius: 8px;
-  background: transparent;
-  margin: 0;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* ---------------------------
+   DROPDOWN TOGGLE BUTTON
+--------------------------- */
+.cp-dropdown-toggle {
   width: 40px;
   height: 40px;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.06);
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* hide default marker in Firefox */
-.cp-dropdown summary::-webkit-details-marker { display: none; }
-.cp-dropdown summary::marker { content: ''; }
+.cp-dropdown-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--cp-accent);
+}
 
-/* style the SVG inside the toggle */
-.cp-dropdown summary svg { width:22px; height:22px; display:block; fill:var(--cp-accent); }
-
-/* Menu container - placed under the toggle */
+/* ------------------------------------
+   DROPDOWN MENU (hidden by default)
+------------------------------------ */
 .cp-dropdown-menu {
   position: absolute;
-  top: calc(100% + 8px);
+  top: 46px;
   right: 0;
   min-width: 160px;
-  display: none; /* shown when <details> is open */
-  flex-direction: column;
-  gap: 6px;
-  padding: 8px;
-  border-radius: 8px;
   background: #fff;
   border: 1px solid #e6eef9;
-  box-shadow: 0 8px 20px rgba(15,23,42,0.06);
-  z-index: 2147483650;
+  box-shadow: 0 8px 20px rgba(15,23,42,0.08);
+  border-radius: 8px;
+  padding: 6px 0;
+  display: none;   /* hidden until JS toggles it */
+  flex-direction: column;
+  z-index: 900000000;
 }
 
-/* Show menu when details is open */
-.cp-dropdown[open] .cp-dropdown-menu { display: flex; }
-
-/* Items inside menu - reuse original button styles for compatibility */
-.cp-dropdown-menu .add-snippet-btn,
-.cp-dropdown-menu .refresh-remote-btn {
-  padding:8px 12px;
-  border-radius:8px;
-  border:1px solid var(--cp-accent);
-  background:linear-gradient(180deg,rgba(204,0,32,0.08),rgba(255,255,255,0));
-  color:var(--cp-accent); font-weight:700;
-  cursor:pointer; white-space:nowrap; line-height:1; text-align:left;
+/* ----------------------------
+   MENU ITEM STYLING
+---------------------------- */
+.cp-dropdown-item {
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
-/* Hover effect for menu items */
-.cp-dropdown-menu .add-snippet-btn:hover,
-.cp-dropdown-menu .refresh-remote-btn:hover {
-  box-shadow:0 6px 18px rgba(204,0,32,0.08); transform:translateY(-1px);
-}
-
-/* ensure menu buttons are full-width and accessible */
-.cp-dropdown-menu .add-snippet-btn,
-.cp-dropdown-menu .refresh-remote-btn {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* keep original standalone button styles available (if remote HTML still uses them elsewhere) */
-.add-snippet-btn, .refresh-remote-btn{
-  padding:8px 12px; border-radius:8px;
-  border:1px solid var(--cp-accent);
-  background:linear-gradient(180deg,rgba(204,0,32,0.08),rgba(255,255,255,0));
-  color:var(--cp-accent); font-weight:700;
-  cursor:pointer; white-space:nowrap; line-height:1; flex-shrink:0;
-}
-.add-snippet-btn:hover, .refresh-remote-btn:hover{
-  box-shadow:0 6px 18px rgba(204,0,32,0.08); transform:translateY(-1px);
-}
-
-.search-row {
-  display:flex;
-  gap:8px;
-  padding:10px 6px;
-  border-bottom:1px solid #f1f5f9;
-  align-items:center;
-}
-.search-row input {
-  flex:1;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid #e6eef9;
-  font-size:14px;
-}
-.search-row .clear-btn {
-  padding:8px 10px;
-  border-radius:8px;
-  border:1px solid #e6eef9;
-  background:white;
-  cursor:pointer;
-}
-
-/******** SNIPPET CARDS ********/
-.cp-item{
-  border-radius:8px; padding:8px; background:#fbfdff;
-  border:1px solid #f1f7ff; margin-bottom:8px;
-}
-.cp-row{ display:flex; align-items:center; gap:8px; }
-.cp-title{ cursor:pointer; font-weight:600; color:#0f172a; flex:1; }
-
-.cp-copy{
-  padding:6px 10px; border-radius:6px;
-  border:1px solid rgba(204,0,32,0.35);
-  background:linear-gradient(180deg,rgba(204,0,32,0.04),#f0f7ff);
-  color:var(--cp-accent); cursor:pointer;
-  white-space:nowrap; flex-shrink:0;
-}
-.cp-copy:hover{
-  box-shadow:0 4px 10px rgba(204,0,32,0.06); transform:translateY(-1px);
-}
-.cp-code{
-  display:none; width:100%; min-height:120px;
-  margin-top:8px; padding:8px;
-  border-radius:6px; border:1px solid #e6eef9;
-  background:#fff; font-family:ui-monospace,monospace; font-size:12px;
-}
-.cp-actions{ display:none; margin-top:8px; gap:8px; align-items:center; }
-.cp-save, .cp-edit, .cp-delete{
-  padding:6px 10px; border-radius:6px;
-  background:#fff; cursor:pointer; color:var(--cp-accent);
-  border:1px solid rgba(204,0,32,0.45); font-weight:600;
-}
-.cp-edit { border-color: rgba(0,0,0,0.12); color: #0f172a; }
-.cp-delete { border-color: rgba(204,0,32,0.65); color: #a60a12; background: linear-gradient(180deg, rgba(255,240,240,0.6), #fff); }
-.cp-save:hover, .cp-edit:hover, .cp-delete:hover{
-  box-shadow:0 6px 16px rgba(204,0,32,0.06); transform:translateY(-1px);
-}
-.cp-char{ margin-left:auto; font-size:12px; color:var(--cp-muted); }
-
-#cp-toolbox-toast{
-  position:fixed; right:20px; bottom:20px;
-  background:#111; color:#fff; padding:8px 12px; border-radius:8px;
-  z-index:2147483650; border:2px solid rgba(204,0,32,0.85);
+.cp-dropdown-item:hover {
+  background: rgba(204,0,32,0.06);
+  color: var(--cp-accent);
 }
 
