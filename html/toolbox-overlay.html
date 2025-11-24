@@ -1,2 +1,46 @@
-<!doctype html> <html lang="en"> <head> <meta charset="utf-8" /> <meta name="viewport" content="width=device-width,initial-scale=1" /> <title>CP Toolbox UI</title> <!-- This file is intended to be hosted on GitHub (raw) and referenced by the userscript. The userscript will inject the HTML into the page DOM (you can fetch this file and take the inner content, or host only the CSS and let the script create DOM). --> <link rel="stylesheet" href="cp_toolbox.css"> </head> <body> <!-- Panel root --> <div id="cp-toolbox-panel" role="dialog" aria-hidden="true"> <div class="header"> <div class="logo" id="cp-logo" aria-hidden="true"> <!-- Logo SVG will be injected by the userscript (remote civicplus.svg) --> <span style="font-size:12px;color:var(--cp-muted)">Loading logo…</span> </div> <div class="btns"> <button class="add-snippet-btn" id="cp-add-btn">+ Add Snippet</button> <button class="refresh-remote-btn" id="cp-refresh-btn">Refresh Remote</button> </div> </div> <div class="search-row"> <input id="cp-search-input" type="search" placeholder="Search title or code..." /> <button class="clear-btn" id="cp-clear-search">Clear</button> </div> <div id="cp-list"></div> <div class="footer" style="padding:8px 4px; border-top:1px solid #f1f5f9; display:flex; gap:8px; align-items:center;"> <div>Width:</div> <input id="cp-width-input" type="number" value="420" min="220" max="900" style="width:80px; padding:6px; border-radius:6px; border:1px solid #e6eef9;" /> </div> </div> </body> </html>
+<!doctype html>
+<html lang="en">
 
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CP Toolbox UI</title>
+  <!-- This file is intended to be hosted on GitHub (raw) and referenced by the userscript. The userscript will inject the HTML into the page DOM (you can fetch this file and take the inner content, or host only the CSS and let the script create DOM). -->
+  <link rel="stylesheet" href="cp_toolbox.css">
+</head>
+
+<body> <!-- Panel root -->
+  <div id="cp-toolbox-panel" role="dialog" aria-hidden="true">
+    <div class="header">
+      <div class="logo" id="cp-logo" aria-hidden="true">
+        <!-- Logo SVG will be injected by the userscript (remote civicplus.svg) --> <span
+          style="font-size:12px;color:var(--cp-muted)">Loading logo…</span> </div>
+   <div class="btns">
+  <div class="cp-dropdown" aria-haspopup="true">
+    <button class="cp-dropdown-toggle" aria-expanded="false" aria-label="Actions" type="button" title="Actions">
+      <!-- Provided FA chevron svg sized ~30px -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" width="30" height="30" aria-hidden="true" focusable="false">
+        <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com -->
+        <path d="M140.3 376.8c12.6 10.2 31.1 9.5 42.8-2.2l128-128c9.2-9.2 11.9-22.9 6.9-34.9S301.4 192 288.5 192l-256 0c-12.9 0-24.6 7.8-29.6 19.8S.7 237.5 9.9 246.6l128 128 2.4 2.2z"/>
+      </svg>
+    </button>
+
+    <div class="cp-dropdown-menu" role="menu" aria-label="Toolbox actions" aria-hidden="true">
+      <div id="cp-add-btn" class="cp-dropdown-item" role="menuitem" tabindex="0">+ Add Snippet</div>
+      <div id="cp-refresh-btn" class="cp-dropdown-item" role="menuitem" tabindex="0">Server Snippets</div>
+    </div>
+  </div>
+</div>
+    </div>
+    <div class="search-row"> <input id="cp-search-input" type="search" placeholder="Search title or code..." /> <button
+        class="clear-btn" id="cp-clear-search">Clear</button> </div>
+    <div id="cp-list"></div>
+    <div class="footer"
+      style="padding:8px 4px; border-top:1px solid #f1f5f9; display:flex; gap:8px; align-items:center;">
+      <div>Width:</div> <input id="cp-width-input" type="number" value="420" min="220" max="900"
+        style="width:80px; padding:6px; border-radius:6px; border:1px solid #e6eef9;" />
+    </div>
+  </div>
+</body>
+
+</html>
