@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CP Toolbox UI</title>
+  <!-- This file is intended to be hosted on GitHub (raw) and referenced by the userscript.
+       The userscript will inject the HTML into the page DOM (you can fetch this file and
+       take the inner content, or host only the CSS and let the script create DOM). -->
+  <link rel="stylesheet" href="cp_toolbox.css">
+</head>
+<body>
+  <!-- Panel root -->
+  <div id="cp-toolbox-panel" role="dialog" aria-hidden="true">
+    <div class="header">
+      <div class="logo" id="cp-logo" aria-hidden="true">
+        <!-- Logo SVG will be injected by the userscript (remote civicplus.svg) -->
+        <span style="font-size:12px;color:var(--cp-muted)">Loading logo…</span>
+      </div>
+      <div class="btns">
+        <button class="add-snippet-btn" id="cp-add-btn">+ Add Snippet</button>
+        <button class="refresh-remote-btn" id="cp-refresh-btn">Refresh Remote</button>
+      </div>
+    </div>
+
+    <div class="search-row">
+      <input id="cp-search-input" type="search" placeholder="Search title or code..." />
+      <button class="clear-btn" id="cp-clear-search">Clear</button>
+    </div>
+
+    <div id="cp-list"></div>
+
+    <div class="footer" style="padding:8px 4px; border-top:1px solid #f1f5f9; display:flex; gap:8px; align-items:center;">
+      <div>Width:</div>
+      <input id="cp-width-input" type="number" value="420" min="220" max="900" style="width:80px; padding:6px; border-radius:6px; border:1px solid #e6eef9;" />
+    </div>
+  </div>
+</body>
+</html>
