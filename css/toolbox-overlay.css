@@ -13,7 +13,88 @@
 }
 .logo{ display:flex; align-items:center; justify-content:center; }
 #cp-toolbox-panel svg{ height:64px; width:auto; display:block; max-width:100%; }
+
+/* btns area (now holds a dropdown) */
 .header .btns{ display:flex; gap:8px; align-items:center; }
+
+/* -------- Dropdown (details/summary) -------- */
+.cp-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Remove default disclosure triangle and style the summary as a square button */
+.cp-dropdown summary {
+  list-style: none; /* hide triangle in some browsers */
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 6px;
+  border-radius: 8px;
+  background: transparent;
+  margin: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+/* hide default marker in Firefox */
+.cp-dropdown summary::-webkit-details-marker { display: none; }
+.cp-dropdown summary::marker { content: ''; }
+
+/* style the SVG inside the toggle */
+.cp-dropdown summary svg { width:22px; height:22px; display:block; fill:var(--cp-accent); }
+
+/* Menu container - placed under the toggle */
+.cp-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 160px;
+  display: none; /* shown when <details> is open */
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #e6eef9;
+  box-shadow: 0 8px 20px rgba(15,23,42,0.06);
+  z-index: 2147483650;
+}
+
+/* Show menu when details is open */
+.cp-dropdown[open] .cp-dropdown-menu { display: flex; }
+
+/* Items inside menu - reuse original button styles for compatibility */
+.cp-dropdown-menu .add-snippet-btn,
+.cp-dropdown-menu .refresh-remote-btn {
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid var(--cp-accent);
+  background:linear-gradient(180deg,rgba(204,0,32,0.08),rgba(255,255,255,0));
+  color:var(--cp-accent); font-weight:700;
+  cursor:pointer; white-space:nowrap; line-height:1; text-align:left;
+}
+
+/* Hover effect for menu items */
+.cp-dropdown-menu .add-snippet-btn:hover,
+.cp-dropdown-menu .refresh-remote-btn:hover {
+  box-shadow:0 6px 18px rgba(204,0,32,0.08); transform:translateY(-1px);
+}
+
+/* ensure menu buttons are full-width and accessible */
+.cp-dropdown-menu .add-snippet-btn,
+.cp-dropdown-menu .refresh-remote-btn {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* keep original standalone button styles available (if remote HTML still uses them elsewhere) */
 .add-snippet-btn, .refresh-remote-btn{
   padding:8px 12px; border-radius:8px;
   border:1px solid var(--cp-accent);
@@ -89,3 +170,4 @@
   background:#111; color:#fff; padding:8px 12px; border-radius:8px;
   z-index:2147483650; border:2px solid rgba(204,0,32,0.85);
 }
+
