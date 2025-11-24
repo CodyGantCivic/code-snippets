@@ -3,55 +3,83 @@
   --cp-muted: #667085;
 }
 
-#cp-toolbox-panel * {
-  box-sizing: border-box;
-  font-family: Inter, system-ui, Arial;
-}
+/* (existing rules kept — only new/modified rules shown below) */
 
-#cp-toolbox-panel {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 420px;
-  background: #fff;
-  border-right: 1px solid #e6edf8;
-  z-index: 2147483647;
-  display: none;
-  overflow: auto;
-  padding: 8px;
-}
-
+/* Header wrapper kept as flex — ensure btns sits on the right side */
 .header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* changed so logo left, btns right */
   gap: 12px;
   padding: 10px 8px;
   border-bottom: 1px solid #f1f5f9;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#cp-toolbox-panel svg {
-  height: 64px;
-  width: auto;
-  display: block;
-  max-width: 100%;
-}
-
+/* Button dropdown container */
 .header .btns {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+  min-width: 120px;
+  user-select: none;
 }
 
-.add-snippet-btn,
-.refresh-remote-btn {
+/* Visible "header" area that user clicks */
+.btns-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, rgba(204,0,32,0.04), rgba(255,255,255,0));
+  color: var(--cp-accent);
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+}
+.btns-header:focus,
+.btns-header:focus-visible,
+.btns:focus-within .btns-header {
+  outline: 2px solid rgba(204,0,32,0.15);
+  box-shadow: 0 6px 18px rgba(204,0,32,0.06);
+}
+
+/* dropdown wrapper is initially hidden */
+.btns-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 220px;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #e9f0f6;
+  background: #fff;
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.06);
+  z-index: 2147483650;
+  transform-origin: top right;
+  transform: translateY(-6px) scale(0.98);
+  opacity: 0;
+  transition: transform 180ms ease, opacity 160ms ease;
+}
+
+/* reveal dropdown when parent has .open */
+.btns.open .btns-dropdown {
+  display: flex;
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Keep original button visual style inside dropdown */
+.btns-dropdown .add-snippet-btn,
+.btns-dropdown .refresh-remote-btn {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid var(--cp-accent);
@@ -61,141 +89,35 @@
   cursor: pointer;
   white-space: nowrap;
   line-height: 1;
-  flex-shrink: 0;
 }
 
-.add-snippet-btn:hover,
-.refresh-remote-btn:hover {
+/* hover states retained */
+.btns-dropdown .add-snippet-btn:hover,
+.btns-dropdown .refresh-remote-btn:hover {
   box-shadow: 0 6px 18px rgba(204, 0, 32, 0.08);
   transform: translateY(-1px);
 }
 
-.search-row {
-  display: flex;
-  gap: 8px;
-  padding: 10px 6px;
-  border-bottom: 1px solid #f1f5f9;
-  align-items: center;
-}
-
-.search-row input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #e6eef9;
-  font-size: 14px;
-}
-
-.search-row .clear-btn {
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #e6eef9;
-  background: white;
-  cursor: pointer;
-}
-
-/******** SNIPPET CARDS ********/
-.cp-item {
-  border-radius: 8px;
-  padding: 8px;
-  background: #fbfdff;
-  border: 1px solid #f1f7ff;
-  margin-bottom: 8px;
-}
-
-.cp-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.cp-title {
-  cursor: pointer;
-  font-weight: 600;
-  color: #0f172a;
-  flex: 1;
-}
-
-.cp-copy {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid rgba(204, 0, 32, 0.35);
-  background: linear-gradient(180deg, rgba(204, 0, 32, 0.04), #f0f7ff);
-  color: var(--cp-accent);
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.cp-copy:hover {
-  box-shadow: 0 4px 10px rgba(204, 0, 32, 0.06);
-  transform: translateY(-1px);
-}
-
-.cp-code {
-  display: none;
-  width: 100%;
-  min-height: 120px;
-  margin-top: 8px;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #e6eef9;
-  background: #fff;
-  font-family: ui-monospace, monospace;
+/* small chevron style */
+.chev {
+  opacity: 0.7;
   font-size: 12px;
+  transition: transform 160ms ease;
 }
 
-.cp-actions {
-  display: none;
-  margin-top: 8px;
-  gap: 8px;
-  align-items: center;
+/* rotate chevron when open */
+.btns.open .chev {
+  transform: rotate(-180deg);
 }
 
-.cp-save,
-.cp-edit,
-.cp-delete {
-  padding: 6px 10px;
-  border-radius: 6px;
-  background: #fff;
-  cursor: pointer;
-  color: var(--cp-accent);
-  border: 1px solid rgba(204, 0, 32, 0.45);
-  font-weight: 600;
+/* Clicking directly on a button should not close unless JS closes it.
+   We will wire keyboard handling in JS later. */
+
+/* small responsive tweak (if panel gets narrow) */
+@media (max-width: 360px) {
+  .btns-dropdown {
+    min-width: 180px;
+    right: 4px;
+  }
 }
 
-.cp-edit {
-  border-color: rgba(0, 0, 0, 0.12);
-  color: #0f172a;
-}
-
-.cp-delete {
-  border-color: rgba(204, 0, 32, 0.65);
-  color: #a60a12;
-  background: linear-gradient(180deg, rgba(255, 240, 240, 0.6), #fff);
-}
-
-.cp-save:hover,
-.cp-edit:hover,
-.cp-delete:hover {
-  box-shadow: 0 6px 16px rgba(204, 0, 32, 0.06);
-  transform: translateY(-1px);
-}
-
-.cp-char {
-  margin-left: auto;
-  font-size: 12px;
-  color: var(--cp-muted);
-}
-
-#cp-toolbox-toast {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  background: #111;
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 8px;
-  z-index: 2147483650;
-  border: 2px solid rgba(204, 0, 32, 0.85);
-}
