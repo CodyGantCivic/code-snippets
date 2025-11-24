@@ -3,34 +3,41 @@
   --cp-muted: #667085;
 }
 
+/* Global font & box-sizing */
 #cp-toolbox-panel * {
   box-sizing: border-box;
   font-family: Inter, system-ui, Arial;
 }
 
+/* Main panel: fixed, resizable horizontally */
 #cp-toolbox-panel {
   position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
   width: 420px;
+  min-width: 220px;
+  max-width: 900px;
   background: #fff;
   border-right: 1px solid #e6edf8;
   z-index: 2147483647;
   display: none;
-  overflow: auto;
+  overflow: auto;      /* needed for resize */
   padding: 8px;
+  resize: horizontal;  /* allow width dragging */
 }
 
+/* Header: logo on left, button group on right */
 .header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 12px;
   padding: 10px 8px;
   border-bottom: 1px solid #f1f5f9;
 }
 
+/* Logo container */
 .logo {
   display: flex;
   align-items: center;
@@ -44,14 +51,72 @@
   max-width: 100%;
 }
 
+/* Button group wrapper */
 .header .btns {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+  min-width: 120px;
+  user-select: none;
 }
 
-.add-snippet-btn,
-.refresh-remote-btn {
+/* Visible dropdown toggle */
+.btns-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, rgba(204,0,32,0.04), rgba(255,255,255,0));
+  color: var(--cp-accent);
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.btns-header:focus,
+.btns-header:focus-visible,
+.btns:focus-within .btns-header {
+  outline: 2px solid rgba(204,0,32,0.15);
+  box-shadow: 0 6px 18px rgba(204,0,32,0.06);
+}
+
+/* Dropdown menu container (initially hidden) */
+.btns-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 220px;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #e9f0f6;
+  background: #fff;
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.06);
+  z-index: 2147483650;
+  transform-origin: top right;
+  transform: translateY(-6px) scale(0.98);
+  opacity: 0;
+  transition: transform 180ms ease, opacity 160ms ease;
+}
+
+/* Show the dropdown when `.open` class is applied */
+.btns.open .btns-dropdown {
+  display: flex;
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Buttons inside dropdown */
+.btns-dropdown .add-snippet-btn,
+.btns-dropdown .refresh-remote-btn {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid var(--cp-accent);
@@ -61,15 +126,26 @@
   cursor: pointer;
   white-space: nowrap;
   line-height: 1;
-  flex-shrink: 0;
 }
 
-.add-snippet-btn:hover,
-.refresh-remote-btn:hover {
+.btns-dropdown .add-snippet-btn:hover,
+.btns-dropdown .refresh-remote-btn:hover {
   box-shadow: 0 6px 18px rgba(204, 0, 32, 0.08);
   transform: translateY(-1px);
 }
 
+/* Chevron rotation */
+.chev {
+  opacity: 0.7;
+  font-size: 12px;
+  transition: transform 160ms ease;
+}
+
+.btns.open .chev {
+  transform: rotate(-180deg);
+}
+
+/* Search bar */
 .search-row {
   display: flex;
   gap: 8px;
@@ -94,7 +170,7 @@
   cursor: pointer;
 }
 
-/******** SNIPPET CARDS ********/
+/* Snippet card styling */
 .cp-item {
   border-radius: 8px;
   padding: 8px;
@@ -188,6 +264,7 @@
   color: var(--cp-muted);
 }
 
+/* Toast notification */
 #cp-toolbox-toast {
   position: fixed;
   right: 20px;
@@ -198,123 +275,5 @@
   border-radius: 8px;
   z-index: 2147483650;
   border: 2px solid rgba(204, 0, 32, 0.85);
-}
-
-/* (existing rules kept — only new/modified rules shown below) */
-
-/* Header wrapper kept as flex — ensure btns sits on the right side */
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* changed so logo left, btns right */
-  gap: 12px;
-  padding: 10px 8px;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-/* Button dropdown container */
-.header .btns {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-end;
-  position: relative;
-  min-width: 120px;
-  user-select: none;
-}
-
-/* Visible "header" area that user clicks */
-.btns-header {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  background: linear-gradient(180deg, rgba(204,0,32,0.04), rgba(255,255,255,0));
-  color: var(--cp-accent);
-  font-weight: 700;
-  cursor: pointer;
-  line-height: 1;
-}
-.btns-header:focus,
-.btns-header:focus-visible,
-.btns:focus-within .btns-header {
-  outline: 2px solid rgba(204,0,32,0.15);
-  box-shadow: 0 6px 18px rgba(204,0,32,0.06);
-}
-
-/* dropdown wrapper is initially hidden */
-.btns-dropdown {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 8px);
-  min-width: 220px;
-  display: none;
-  flex-direction: column;
-  gap: 8px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #e9f0f6;
-  background: #fff;
-  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.06);
-  z-index: 2147483650;
-  transform-origin: top right;
-  transform: translateY(-6px) scale(0.98);
-  opacity: 0;
-  transition: transform 180ms ease, opacity 160ms ease;
-}
-
-/* reveal dropdown when parent has .open */
-.btns.open .btns-dropdown {
-  display: flex;
-  transform: translateY(0) scale(1);
-  opacity: 1;
-}
-
-/* Keep original button visual style inside dropdown */
-.btns-dropdown .add-snippet-btn,
-.btns-dropdown .refresh-remote-btn {
-  display: inline-flex;
-  width: 100%;
-  justify-content: center;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--cp-accent);
-  background: linear-gradient(180deg, rgba(204, 0, 32, 0.08), rgba(255, 255, 255, 0));
-  color: var(--cp-accent);
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-  line-height: 1;
-}
-
-/* hover states retained */
-.btns-dropdown .add-snippet-btn:hover,
-.btns-dropdown .refresh-remote-btn:hover {
-  box-shadow: 0 6px 18px rgba(204, 0, 32, 0.08);
-  transform: translateY(-1px);
-}
-
-/* small chevron style */
-.chev {
-  opacity: 0.7;
-  font-size: 12px;
-  transition: transform 160ms ease;
-}
-
-/* rotate chevron when open */
-.btns.open .chev {
-  transform: rotate(-180deg);
-}
-
-/* Clicking directly on a button should not close unless JS closes it.
-   We will wire keyboard handling in JS later. */
-
-/* small responsive tweak (if panel gets narrow) */
-@media (max-width: 360px) {
-  .btns-dropdown {
-    min-width: 180px;
-    right: 4px;
-  }
 }
 
