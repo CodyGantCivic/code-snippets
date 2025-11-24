@@ -16,6 +16,14 @@
     "code": "}\n.widget.skin29 .cpSlider .overlayInner{\n    padding:1em;\n    background:rgba(19, 75, 112, 0.9);\n}\n.row.outer.wide .widget.skin29 .cpSlider .overlayInner{\n    border-radius:10px;\n}\n.widget.skin29 .cpSlider .overlay{\n    max-width:750px;\n    background:rgba(19, 75, 112, 0);\n}"
   },
   {
+    "id": "test",
+    "title": "test",
+    "version": 1,
+    "updatedAt": "2025-01-01T00:00:00Z",
+    "readonly": false,
+    "code": "this is a test"
+  },
+  {
     "id": "flex-calendar",
     "title": "flex calendar",
     "version": 1,
