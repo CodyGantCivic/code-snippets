@@ -1,135 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>CP Toolbox UI</title>
-    <!-- This file is intended to be hosted on GitHub (raw) and referenced by the userscript. The userscript will inject the HTML into the page DOM (you can fetch this file and take the inner content, or host only the CSS and let the script create DOM). -->
-    <link rel="stylesheet" href="cp_toolbox.css" />
-  </head>
 
-  <body>
-    <!-- Panel root -->
-    <div id="cp-toolbox-panel" role="dialog" aria-hidden="true">
-      <div class="header">
-        <div class="logo" id="cp-logo" aria-hidden="true">
-          <!-- Logo SVG will be injected by the userscript (remote civicplus.svg) -->
-          <span style="font-size: 12px; color: var(--cp-muted)"
-            >Loading logo…</span>
-        </div>
-        <div class="btns">
-          <div
-            class="button"
-            onclick="document.body.classList.toggle('expanded')">
-            <div class="places">options</div>
-          </div>
-          <div class="menu">
-            <svg class="shadow" width="375" height="322" viewBox="0 0 375 322">
-              <defs>
-                <filter
-                  id="blur"
-                  x="-0.053211679"
-                  width="1.1064234"
-                  y="-0.068773585"
-                  height="1.1375472"
-                >
-                  <feGaussianBlur
-                    inkscape:collect="always"
-                    stdDeviation="6.075"
-                    id="feGaussianBlur1076"
-                  />
-                </filter>
-              </defs>
-              <g transform="translate(0,120)">
-                <path
-                  style="
-                    opacity: 0.14;
-                    fill: #0e232e;
-                    fill-opacity: 1;
-                    stroke: none;
-                    stroke-width: 1;
-                    stroke-linecap: round;
-                    stroke-linejoin: round;
-                    stroke-miterlimit: 4;
-                    stroke-dasharray: none;
-                    stroke-dashoffset: 0;
-                    stroke-opacity: 1;
-                    filter: url(#blur);
-                  "
-                  d="M 187.5 59.5 L 176.5 70.5 L 61.107422 70.5 C 55.231364 70.5 50.5 75.229411 50.5 81.105469 L 50.5 260.89258 C 50.5 266.76864 55.231364 271.5 61.107422 271.5 L 187.5 271.5 L 313.89453 271.5 C 319.77059 271.5 324.5 266.76864 324.5 260.89258 L 324.5 81.105469 C 324.5 75.229411 319.77059 70.5 313.89453 70.5 L 198.5 70.5 L 187.5 59.5 z "
-                  transform="translate(0,-120)"
-                  id="path967"
-                />
-              </g>
-            </svg>
-            <svg
-              class="container"
-              width="275"
-              height="222"
-              viewBox="0 0 275 222"
-            >
-              <g transform="translate(0,20)">
-                <path
-                  class="border1"
-                  fill="transparent"
-                  stroke-width="1.5"
-                  d="m 137.5,201.5003 h -126.393699 c -5.8760576,0 -10.606602,-4.73054 -10.606602,-10.6066 v -179.787399 c 0,-5.8760576 4.7305444,-10.606602 10.606602,-10.606602 h 115.393699 l 11,-10.999699"
-                />
-                <path
-                  class="border2"
-                  fill="transparent"
-                  stroke-width="1.5"
-                  d="m 137.5,-10.5 11,10.999699 h 115.3937 c 5.87606,0 10.6066,4.7305444 10.6066,10.606602 v 179.787399 c 0,5.87606 -4.73054,10.6066 -10.6066,10.6066 h -126.3937"
-                />
-              </g>
-            </svg>
-            <div class="contents">
-              <div class="row" class="add-snippet-btn" id="cp-add-btn">Add Snippet</div>
-              <div class="row" class="refresh-remote-btn" id="cp-refresh-btn">Refresh Remote</div>
-            </div>
-          </div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CP Toolbox UI</title>
+  <!-- This file is intended to be hosted on GitHub (raw) and referenced by the userscript. The userscript will inject the HTML into the page DOM (you can fetch this file and take the inner content, or host only the CSS and let the script create DOM). -->
+  <link rel="stylesheet" href="cp_toolbox.css" />
+</head>
 
-          <button class="add-snippet-btn" id="cp-add-btn">+ Add Snippet</button>
-          <button class="refresh-remote-btn" id="cp-refresh-btn">
-            Refresh Remote
-          </button>
-        </div>
+<body>
+  <!-- Panel root -->
+  <div id="cp-toolbox-panel" role="dialog" aria-hidden="true">
+    <div class="header">
+      <div class="logo" id="cp-logo" aria-hidden="true">
+        <!-- Logo SVG will be injected by the userscript (remote civicplus.svg) -->
+        <span style="font-size: 12px; color: var(--cp-muted)">Loading logo…</span>
       </div>
-      <div class="search-row">
-        <input
-          id="cp-search-input"
-          type="search"
-          placeholder="Search title or code..."
-        />
-        <button class="clear-btn" id="cp-clear-search">Clear</button>
+      <div class="btns">
+        <button class="add-snippet-btn" id="cp-add-btn">+ Add Snippet</button>
+        <button class="refresh-remote-btn" id="cp-refresh-btn">
+          Refresh Remote
+        </button>
       </div>
-      <div id="cp-list"></div>
-      <div
-        class="footer"
-        style="
+    </div>
+  </div>
+  <div class="search-row">
+    <input id="cp-search-input" type="search" placeholder="Search title or code..." />
+    <button class="clear-btn" id="cp-clear-search">Clear</button>
+  </div>
+  <div id="cp-list"></div>
+  <div class="footer" style="
           padding: 8px 4px;
           border-top: 1px solid #f1f5f9;
           display: flex;
           gap: 8px;
           align-items: center;
-        "
-      >
-        <div>Width:</div>
-        <input
-          id="cp-width-input"
-          type="number"
-          value="420"
-          min="220"
-          max="900"
-          style="
+        ">
+    <div>Width:</div>
+    <input id="cp-width-input" type="number" value="420" min="220" max="900" style="
             width: 80px;
             padding: 6px;
             border-radius: 6px;
             border: 1px solid #e6eef9;
-          "
-        />
-      </div>
-    </div>
-  </body>
-</html>
+          " />
+  </div>
+  </div>
+</body>
 
+</html>
