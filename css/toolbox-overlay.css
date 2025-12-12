@@ -28,7 +28,7 @@
 }
 
 /* Header: logo on left, button group on right */
-.header {
+.headerTS {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -52,7 +52,7 @@
 }
 
 /* Button group wrapper */
-.header .btns {
+.headerTS .btns {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-end;
