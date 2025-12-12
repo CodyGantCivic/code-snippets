@@ -3,7 +3,7 @@
   --cp-muted: #667085;
 }
 
-/* Global font & box-sizing */
+/* Everything scoped to the panel root to avoid bleed */
 #cp-toolbox-panel * {
   box-sizing: border-box;
   font-family: Inter, system-ui, Arial;
@@ -22,13 +22,14 @@
   border-right: 1px solid #e6edf8;
   z-index: 2147483647;
   display: none;
-  overflow: auto;      /* needed for resize */
+  overflow: auto;
   padding: 8px;
-  resize: horizontal;  /* allow width dragging */
+  resize: horizontal;
 }
 
-/* Header: logo on left, button group on right */
-.headerTS {
+/* Header (namespaced). kept headerTS class for compatibility */
+#cp-toolbox-panel .cptbx-header,
+#cp-toolbox-panel .headerTS {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -38,7 +39,8 @@
 }
 
 /* Logo container */
-.logo {
+#cp-toolbox-panel .cptbx-logo,
+#cp-toolbox-panel .logo {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,8 +53,8 @@
   max-width: 100%;
 }
 
-/* Button group wrapper */
-.headerTS .btns {
+/* Button group wrapper (namespaced only) */
+#cp-toolbox-panel .cptbx-btns {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-end;
@@ -61,8 +63,9 @@
   user-select: none;
 }
 
-/* Visible dropdown toggle */
-.btns-header {
+/* Visible dropdown toggle (namespaced) */
+#cp-toolbox-panel .cptbx-btns-header,
+#cp-toolbox-panel .btns-headerTS {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -76,15 +79,15 @@
   line-height: 1;
 }
 
-.btns-header:focus,
-.btns-header:focus-visible,
-.btns:focus-within .btns-header {
+#cp-toolbox-panel .cptbx-btns-header:focus,
+#cp-toolbox-panel .cptbx-btns-header:focus-visible,
+#cp-toolbox-panel .cptbx-btns:focus-within .cptbx-btns-header {
   outline: 2px solid rgba(204,0,32,0.15);
   box-shadow: 0 6px 18px rgba(204,0,32,0.06);
 }
 
-/* Dropdown menu container (initially hidden) */
-.btns-dropdown {
+/* Dropdown menu container (initially hidden) - namespaced */
+#cp-toolbox-panel .cptbx-btns-dropdown {
   position: absolute;
   right: 0;
   top: calc(100% + 8px);
@@ -104,16 +107,16 @@
   transition: transform 180ms ease, opacity 160ms ease;
 }
 
-/* Show the dropdown when `.open` class is applied */
-.btns.open .btns-dropdown {
+/* Show the dropdown when `.open` class is applied on namespaced container */
+#cp-toolbox-panel .cptbx-btns.open .cptbx-btns-dropdown {
   display: flex;
   transform: translateY(0) scale(1);
   opacity: 1;
 }
 
-/* Buttons inside dropdown */
-.btns-dropdown .add-snippet-btn,
-.btns-dropdown .refresh-remote-btn {
+/* Buttons inside dropdown (namespaced) */
+#cp-toolbox-panel .cptbx-btns-dropdown .cptbx-add-snippet-btn,
+#cp-toolbox-panel .cptbx-btns-dropdown .cptbx-refresh-remote-btn {
   display: inline-flex;
   width: 100%;
   justify-content: center;
@@ -128,25 +131,25 @@
   line-height: 1;
 }
 
-.btns-dropdown .add-snippet-btn:hover,
-.btns-dropdown .refresh-remote-btn:hover {
+#cp-toolbox-panel .cptbx-btns-dropdown .cptbx-add-snippet-btn:hover,
+#cp-toolbox-panel .cptbx-btns-dropdown .cptbx-refresh-remote-btn:hover {
   box-shadow: 0 6px 18px rgba(204, 0, 32, 0.08);
   transform: translateY(-1px);
 }
 
 /* Chevron rotation */
-.chev {
+#cp-toolbox-panel .chev {
   opacity: 0.7;
   font-size: 12px;
   transition: transform 160ms ease;
 }
-
-.btns.open .chev {
+#cp-toolbox-panel .cptbx-btns.open .chev {
   transform: rotate(-180deg);
 }
 
-/* Search bar */
-.search-row {
+/* Search bar (namespaced) */
+#cp-toolbox-panel .cptbx-search-row,
+#cp-toolbox-panel .search-row {
   display: flex;
   gap: 8px;
   padding: 10px 6px;
@@ -154,7 +157,8 @@
   align-items: center;
 }
 
-.search-row input {
+#cp-toolbox-panel .cptbx-search-row input,
+#cp-toolbox-panel .search-row input {
   flex: 1;
   padding: 10px;
   border-radius: 8px;
@@ -162,7 +166,8 @@
   font-size: 14px;
 }
 
-.search-row .clear-btn {
+#cp-toolbox-panel .cptbx-search-row .cptbx-clear-btn,
+#cp-toolbox-panel .search-row .clear-btn {
   padding: 8px 10px;
   border-radius: 8px;
   border: 1px solid #e6eef9;
@@ -170,8 +175,8 @@
   cursor: pointer;
 }
 
-/* Snippet card styling */
-.cp-item {
+/* Snippet card styling (namespaced) */
+#cp-toolbox-panel .cptbx-item {
   border-radius: 8px;
   padding: 8px;
   background: #fbfdff;
@@ -179,20 +184,20 @@
   margin-bottom: 8px;
 }
 
-.cp-row {
+#cp-toolbox-panel .cptbx-row {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.cp-title {
+#cp-toolbox-panel .cptbx-title {
   cursor: pointer;
   font-weight: 600;
   color: #0f172a;
   flex: 1;
 }
 
-.cp-copy {
+#cp-toolbox-panel .cptbx-copy {
   padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid rgba(204, 0, 32, 0.35);
@@ -203,12 +208,12 @@
   flex-shrink: 0;
 }
 
-.cp-copy:hover {
+#cp-toolbox-panel .cptbx-copy:hover {
   box-shadow: 0 4px 10px rgba(204, 0, 32, 0.06);
   transform: translateY(-1px);
 }
 
-.cp-code {
+#cp-toolbox-panel .cptbx-code {
   display: none;
   width: 100%;
   min-height: 120px;
@@ -221,16 +226,16 @@
   font-size: 12px;
 }
 
-.cp-actions {
+#cp-toolbox-panel .cptbx-actions {
   display: none;
   margin-top: 8px;
   gap: 8px;
   align-items: center;
 }
 
-.cp-save,
-.cp-edit,
-.cp-delete {
+#cp-toolbox-panel .cptbx-save,
+#cp-toolbox-panel .cptbx-edit,
+#cp-toolbox-panel .cptbx-delete {
   padding: 6px 10px;
   border-radius: 6px;
   background: #fff;
@@ -240,32 +245,36 @@
   font-weight: 600;
 }
 
-.cp-edit {
+#cp-toolbox-panel .cptbx-edit {
   border-color: rgba(0, 0, 0, 0.12);
   color: #0f172a;
 }
 
-.cp-delete {
+#cp-toolbox-panel .cptbx-delete {
   border-color: rgba(204, 0, 32, 0.65);
   color: #a60a12;
   background: linear-gradient(180deg, rgba(255, 240, 240, 0.6), #fff);
 }
 
-.cp-save:hover,
-.cp-edit:hover,
-.cp-delete:hover {
+#cp-toolbox-panel .cptbx-save:hover,
+#cp-toolbox-panel .cptbx-edit:hover,
+#cp-toolbox-panel .cptbx-delete:hover {
   box-shadow: 0 6px 16px rgba(204, 0, 32, 0.06);
   transform: translateY(-1px);
 }
 
-.cp-char {
+#cp-toolbox-panel .cptbx-char {
   margin-left: auto;
   font-size: 12px;
   color: var(--cp-muted);
 }
 
-/* Toast notification */
-#cp-toolbox-toast {
+/* Toast notification (scoped) */
+#cp-toolbox-panel #cp-toolbox-toast,
+#cp-toolbox-panel #cp-toolbox-toast * {
+  box-sizing: border-box;
+}
+#cp-toolbox-panel #cp-toolbox-toast {
   position: fixed;
   right: 20px;
   bottom: 20px;
@@ -276,4 +285,3 @@
   z-index: 2147483650;
   border: 2px solid rgba(204, 0, 32, 0.85);
 }
-
