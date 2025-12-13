@@ -84,3 +84,4 @@
     "code": "display:flex;\nflex-direction:column;\n}\n.widget.skin154 .cpSlider{\n    display:flex;\n}\n.widget.skin154 .text{\n    padding:1em;\n    padding-bottom:0;\n    position:relative;\n    display:flex;\n    flex-direction:column;\n    height:100%;\n}\n.widget.skin154 .widgetDesc{\n    display:flex;\n    flex-direction:column;\n    justify-content:space-between;\n    height:100%;\n}"
   }
 ]
+
