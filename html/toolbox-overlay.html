@@ -1,39 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CP Toolbox UI</title>
-  <link rel="stylesheet" href="cp_toolbox.css" />
-</head>
-<body>
-  <!-- Panel root -->
-  <div id="cp-toolbox-panel" role="dialog" aria-hidden="true">
-    <div class="cptbx-header headerTS">
-      <div class="cptbx-logo" id="cp-logo" aria-hidden="true">
-        <!-- Logo SVG will be injected by the userscript -->
-        <span style="font-size: 12px; color: var(--cp-muted)">Loading logo…</span>
-      </div>
+<div id="cp-toolbox-panel" role="dialog" aria-hidden="true">
+  <!-- Header -->
+  <header class="cptbx-header">
+    <div class="cptbx-logo" aria-hidden="true"></div>
 
-      <!-- Dropdown button group (fully namespaced) -->
-      <div class="cptbx-btns" id="cp-btns" role="group">
-        <div class="cptbx-btns-header btns-headerTS" role="button" aria-haspopup="true" aria-expanded="false" tabindex="0">
-          Actions <span class="chev" aria-hidden="true">▾</span>
-        </div>
-        <div class="cptbx-btns-dropdown" id="cp-btns-dropdown" role="menu" aria-hidden="true">
-          <button class="cptbx-add-snippet-btn" id="cp-add-btn" role="menuitem">+ Add Snippet</button>
-          <button class="cptbx-refresh-remote-btn" id="cp-refresh-btn" role="menuitem">Refresh Remote</button>
-        </div>
-      </div>
+    <div class="cptbx-actions">
+      <button class="cptbx-btn cptbx-primary cptbx-add-snippet-btn">
+        Add
+      </button>
+      <button class="cptbx-btn cptbx-secondary cptbx-refresh-remote-btn">
+        Refresh
+      </button>
     </div>
+  </header>
 
-    <div class="cptbx-search-row search-row">
-      <input id="cp-search" class="cptbx-search-input" type="search" placeholder="Search title or code..." />
-      <button class="cptbx-clear-btn clear-btn" id="cp-clear-search">Clear</button>
-    </div>
-
-    <div id="cp-list"></div>
+  <!-- Search -->
+  <div class="cptbx-search">
+    <input
+      type="search"
+      placeholder="Search snippets"
+      aria-label="Search snippets"
+    />
+    <button class="cptbx-clear-btn" aria-label="Clear search">×</button>
   </div>
-</body>
-</html>
+
+  <!-- List -->
+  <main id="cp-list" class="cptbx-list"></main>
+
+  <!-- Footer -->
+  <footer class="cptbx-footer">
+    <label>
+      Width
+      <input
+        type="number"
+        min="220"
+        max="900"
+        value="420"
+        aria-label="Panel width"
+      />
+    </label>
+  </footer>
+</div>
 
