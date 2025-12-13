@@ -2,15 +2,12 @@
   "manifest_version": 3,
   "name": "CP Toolbox Snippet Saver (Overlay)",
   "version": "2.8.1",
-  "description": "CP Toolbox overlay using remote HTML & CSS files hosted on GitHub. Toggle with Ctrl+RightClick. Add/Edit/Delete snippets.",
+  "description": "CP Toolbox overlay using bundled HTML, CSS, and snippets. Toggle with Ctrl+RightClick. Add/Edit/Delete snippets.",
   "permissions": [
     "storage",
     "activeTab",
     "scripting",
     "clipboardWrite"
-  ],
-  "host_permissions": [
-    "https://raw.githubusercontent.com/*"
   ],
   "icons": {
    
@@ -20,6 +17,17 @@
       "matches": ["<all_urls>"],
       "js": ["content-script.js"],
       "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "snippet.json",
+        "css/toolbox-overlay.css",
+        "html/toolbox-overlay.html",
+        "assets/civicplus.svg"
+      ],
+      "matches": ["<all_urls>"]
     }
   ],
   "background": {

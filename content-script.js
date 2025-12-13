@@ -1,6 +1,6 @@
 // content-script.js
 // Converted from Tampermonkey userscript -> Chrome extension content script (Manifest V3).
-// Behavior should match the original script. Remote assets fetched from raw.githubusercontent.com.
+// Behavior should match the original script while loading assets packaged with the extension.
 
 // IIFE to avoid polluting page global scope
 (async function () {
@@ -12,18 +12,12 @@
   const STORAGE_KEY = 'cp_toolbox_snippets_vgm';
   const WIDTH_KEY = 'cp_toolbox_panel_width_vgm';
 
-  // Remote resources (raw GitHub URLs provided by the user)
-  const REMOTE_SNIPPETS_URL =
-    'https://raw.githubusercontent.com/CodyGantCivic/code-snippets/main/snippet.json';
-
-  const REMOTE_CSS_RAW =
-    'https://raw.githubusercontent.com/CodyGantCivic/code-snippets/main/css/toolbox-overlay.css';
-
-  const REMOTE_HTML_RAW =
-    'https://raw.githubusercontent.com/CodyGantCivic/code-snippets/main/html/toolbox-overlay.html';
-
-  const CIVICPLUS_SVG_RAW =
-    'https://raw.githubusercontent.com/CodyGantCivic/code-snippets/main/assets/civicplus.svg';
+  // Local (packaged) resources
+  const extUrl = (path) => (chrome?.runtime?.getURL ? chrome.runtime.getURL(path) : path);
+  const LOCAL_SNIPPETS_URL = extUrl('snippet.json');
+  const LOCAL_CSS_URL = extUrl('css/toolbox-overlay.css');
+  const LOCAL_HTML_URL = extUrl('html/toolbox-overlay.html');
+  const CIVICPLUS_SVG_URL = extUrl('assets/civicplus.svg');
 
   const DEFAULT_WIDTH = 420;
   const MIN_WIDTH = 220;
@@ -131,12 +125,11 @@
   const uid = (p = 'id') => p + '-' + Math.random().toString(36).slice(2, 9);
 
   /**********************************************
-   * remote fetch helper (uses fetch)
+   * local fetch helper (uses fetch against packaged assets)
    **********************************************/
-  async function loadRemoteText(url) {
-    const urlWithBust = url + (url.includes('?') ? '&' : '?') + 't=' + Date.now();
+  async function loadLocalText(url) {
     try {
-      const res = await fetch(urlWithBust, { cache: 'no-store' });
+      const res = await fetch(url, { cache: 'no-store' });
       if (!res.ok) throw new Error('Fetch failed: ' + res.status);
       return await res.text();
     } catch (err) {
@@ -468,57 +461,46 @@
   z-index: 2147483650;
 }
 
-/* Font Awesome tuning if icons used */
+/* Simple icon fallbacks so we don't depend on Font Awesome */
+.fa-solid { font-style: normal; font-weight: 700; }
+.fa-solid::before { display: inline-block; }
+.fa-code::before { content: '</>'; }
+.fa-arrow-rotate-right::before { content: 'R'; }
+.fa-plus::before { content: '+'; }
+.fa-magnifying-glass::before { content: '?'; }
+.fa-xmark::before { content: 'x'; }
+.fa-arrows-left-right::before { content: '<>'; }
 .cptbx-search i { font-size: 12px; color: var(--muted); margin-right: 6px; }
 `;
 
   /**********************************************
    * Ensure Font Awesome is loaded (if user requested icons)
    **********************************************/
-  function ensureFontAwesome() {
-    // if FA already present, skip
-    if (document.querySelector('link[href*="font-awesome"], link[href*="fontawesome"], link[href*="cdnjs.cloudflare.com"]')) return;
-    try {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css';
-      link.integrity = 'sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==';
-      link.crossOrigin = 'anonymous';
-      link.referrerPolicy = 'no-referrer';
-      document.head.appendChild(link);
-    } catch (e) {
-      // ignore
-    }
-  }
-
   /**********************************************
-   * Insert CSS (fetch remote CSS, fallback to embedded)
-   **********************************************/
+   * Insert CSS (fetch bundled CSS, fallback to embedded)
+  **********************************************/
   async function ensureCss() {
     // Avoid duplicating styles
     if (document.getElementById('cp-toolbox-styles')) return;
     try {
-      const cssText = await loadRemoteText(REMOTE_CSS_RAW);
+      const cssText = await loadLocalText(LOCAL_CSS_URL);
       if (typeof cssText === 'string' && cssText.trim().length > 0) {
         const s = create('style', { id: 'cp-toolbox-styles', html: cssText });
         document.head.appendChild(s);
-        // still ensure FA if remote HTML expects it
-        ensureFontAwesome();
         return;
       }
       throw new Error('empty CSS');
     } catch (err) {
-      console.warn('[CPToolbox] Failed to load remote CSS, using fallback. Error:', err);
+      console.warn('[CPToolbox] Failed to load bundled CSS, using fallback. Error:', err);
       const s = create('style', { id: 'cp-toolbox-styles', html: FALLBACK_CSS });
       document.head.appendChild(s);
-      ensureFontAwesome();
     }
   }
 
   await ensureCss();
 
   /**********************************************
-   * Build / Insert HTML UI (remote HTML or fallback)
+   * Build / Insert HTML UI (bundled HTML or fallback)
    **********************************************/
   let panel = null;
 
@@ -531,10 +513,10 @@
 
     // HEADER (Apple-style default)
     const header = create('div', { class: 'cptbx-header' });
-    const brand = create('div', { class: 'cptbx-brand', html: '<span class="cptbx-mark">⌘</span><span class="cptbx-name">Snippet Box</span>' });
+    const brand = create('div', { class: 'cptbx-brand', html: '<span class="cptbx-mark">&lt;/&gt;</span><span class="cptbx-name">Snippet Box</span>' });
     const btnWrap = create('div', { class: 'cptbx-actions' });
-    const refreshBtn = create('button', { class: 'cptbx-btn cptbx-secondary cptbx-refresh-remote-btn' }, [create('span', { html: 'Refresh' })]);
-    refreshBtn.addEventListener('click', onRefreshRemote);
+    const refreshBtn = create('button', { class: 'cptbx-btn cptbx-secondary cptbx-refresh-snippets-btn cptbx-refresh-remote-btn' }, [create('span', { html: 'Refresh Snippets' })]);
+    refreshBtn.addEventListener('click', onRefreshSnippets);
     const addBtn = create('button', { class: 'cptbx-btn cptbx-primary cptbx-add-snippet-btn' }, [create('span', { html: 'Add' })]);
     addBtn.addEventListener('click', onAddSnippet);
     btnWrap.appendChild(refreshBtn);
@@ -599,13 +581,13 @@
     return fallbackPanel;
   }
 
-  async function buildPanelFromRemote() {
+  async function buildPanelFromLocalHtml() {
     try {
-      const htmlText = await loadRemoteText(REMOTE_HTML_RAW);
+      const htmlText = await loadLocalText(LOCAL_HTML_URL);
       if (typeof htmlText !== 'string' || !htmlText.trim()) throw new Error('empty HTML');
       const wrapper = create('div', { html: htmlText });
       const foundPanel = wrapper.querySelector('#cp-toolbox-panel') || wrapper.firstElementChild;
-      if (!foundPanel) throw new Error('no root panel found in remote HTML');
+      if (!foundPanel) throw new Error('no root panel found in bundled HTML');
 
       if (!document.getElementById('cp-toolbox-panel')) {
         if (!foundPanel.id) foundPanel.id = 'cp-toolbox-panel';
@@ -616,24 +598,22 @@
       }
 
       const docPanel = document.getElementById('cp-toolbox-panel');
-      if (!docPanel) throw new Error('failed to append remote panel');
+      if (!docPanel) throw new Error('failed to append bundled panel');
 
-      // ensure palette exists (in case remote HTML doesn't include it)
+      // ensure palette exists (in case bundled HTML doesn't include it)
       if (!docPanel.querySelector('.cptbx-palette')) {
         const palette = createPaletteElement();
         docPanel.appendChild(palette);
       }
 
-      // ensure FontAwesome request if remote expects it
-      ensureFontAwesome();
       return docPanel;
     } catch (err) {
-      console.warn('[CPToolbox] Failed to load remote HTML - falling back. Error:', err);
+      console.warn('[CPToolbox] Failed to load bundled HTML - falling back. Error:', err);
       return null;
     }
   }
 
-  panel = await buildPanelFromRemote();
+  panel = await buildPanelFromLocalHtml();
   if (!panel) panel = createFallbackPanel();
 
   /**********************************************
@@ -649,7 +629,7 @@
 
   let logoWrap = firstMatch(panel, ['.cptbx-logo', '.cp-logo', '#logo', '.logo', '.cptbx-brand']);
   if (!logoWrap) {
-    logoWrap = create('div', { class: 'cptbx-logo', html: '<span style="font-size:12px; color:var(--cp-muted)">Loading logo…</span>' });
+    logoWrap = create('div', { class: 'cptbx-logo', html: '<span style="font-size:12px; color:var(--cp-muted)">Loading logo...</span>' });
     const headerEl = firstMatch(panel, ['.cptbx-header', '.header', 'header']);
     if (headerEl) headerEl.insertBefore(logoWrap, headerEl.firstChild);
     else panel.insertBefore(logoWrap, panel.firstChild);
@@ -672,20 +652,26 @@
   addBtn.removeEventListener && addBtn.removeEventListener('click', onAddSnippet);
   addBtn.addEventListener('click', onAddSnippet);
 
-  let refreshBtn = firstMatch(panel, ['.cptbx-refresh-remote-btn', '.refresh-remote-btn', '#refresh-remote-btn', 'button.refresh-remote']);
+  let refreshBtn = firstMatch(panel, [
+    '.cptbx-refresh-snippets-btn',
+    '.cptbx-refresh-remote-btn',
+    '.refresh-remote-btn',
+    '#refresh-remote-btn',
+    'button.refresh-remote'
+  ]);
   if (!refreshBtn) {
-    refreshBtn = create('button', { class: 'cptbx-refresh-remote-btn' }, ['Refresh Remote']);
+    refreshBtn = create('button', { class: 'cptbx-refresh-snippets-btn cptbx-refresh-remote-btn' }, ['Refresh Snippets']);
     addBtn.parentElement && addBtn.parentElement.appendChild(refreshBtn);
   }
-  refreshBtn.removeEventListener && refreshBtn.removeEventListener('click', onRefreshRemote);
-  refreshBtn.addEventListener('click', onRefreshRemote);
+  refreshBtn.removeEventListener && refreshBtn.removeEventListener('click', onRefreshSnippets);
+  refreshBtn.addEventListener('click', onRefreshSnippets);
 
   /**********************************************
    * Keep older dropdown setup for compatibility,
-   * but remote Apple-style UI won't use it.
+   * but bundled Apple-style UI won't use it.
    **********************************************/
   (function setupBtnDropdown() {
-    // maintain compatibility with various remote HTML shapes
+    // maintain compatibility with various HTML template shapes
     let btnsContainer = firstMatch(panel, ['.cptbx-btns', '.btns', '#cp-btns', '.header .btns', '.cptbx-actions']);
     if (!btnsContainer && addBtn && addBtn.parentElement) btnsContainer = addBtn.parentElement;
     if (!btnsContainer) {
@@ -694,9 +680,9 @@
       headerEl.appendChild(btnsContainer);
     }
 
-    // If remote layout already puts buttons where we want, just return
+    // If the layout already puts buttons where we want, just return
     // (we only need dropdown behavior on legacy templates)
-    // For remote Apple style, leave as-is.
+    // For Apple style, leave as-is.
   })();
 
   // SEARCH input and clear button selectors should include the new class
@@ -762,7 +748,7 @@
       await storageSet(WIDTH_KEY, v);
     });
   } else {
-    // If none in remote HTML, create a tiny footer control if missing
+    // If none in bundled HTML, create a tiny footer control if missing
     const footer = create('div', {
       style: {
         padding: '8px 4px',
@@ -799,9 +785,9 @@
   /**********************************************
    * SVG logo loader
    **********************************************/
-  async function loadRemoteSvgIntoLogo(url, logoElement) {
+  async function loadSvgIntoLogo(url, logoElement) {
     try {
-      const svgText = await loadRemoteText(url);
+      const svgText = await loadLocalText(url);
       if (typeof svgText === 'string' && svgText.trim().toLowerCase().includes('<svg')) {
         let finalSvg = svgText;
         finalSvg = finalSvg.replace(/<svg\b([^>]*)>/i, (m, attrs) => {
@@ -818,7 +804,7 @@
       logoElement.innerHTML = '<span style="font-size:12px; color:var(--cp-muted)">Logo load failed</span>';
     }
   }
-  if (logoWrap) loadRemoteSvgIntoLogo(CIVICPLUS_SVG_RAW, logoWrap);
+  if (logoWrap) loadSvgIntoLogo(CIVICPLUS_SVG_URL, logoWrap);
 
   /**********************************************
    * STATE
@@ -999,7 +985,7 @@
       listWrap.appendChild(
         create('div', {
           style: { padding: '12px', color: '#667085' }
-        }, ['No snippets match — try a different search or click "Refresh Remote".'])
+        }, ['No snippets match - try a different search or click "Refresh Snippets".'])
       );
       return;
     }
@@ -1041,10 +1027,10 @@
   }
 
   /**********************************************
-   * REFRESH REMOTE (using fetch)
+   * REFRESH SNIPPETS (from packaged JSON)
    **********************************************/
-  async function onRefreshRemote() {
-    showToast('Loading remote snippets…');
+  async function onRefreshSnippets() {
+    showToast('Loading bundled snippets...');
 
     async function fetchJson(url) {
       try {
@@ -1057,13 +1043,13 @@
       }
     }
 
-    const r = await fetchJson(REMOTE_SNIPPETS_URL);
+    const r = await fetchJson(LOCAL_SNIPPETS_URL);
     if (!r.ok || !Array.isArray(r.data)) {
-      showToast('Failed to load remote JSON');
-      console.error('[CPToolbox] remote load failed:', r);
+      showToast('Failed to load bundled JSON');
+      console.error('[CPToolbox] bundled load failed:', r);
       return;
     }
-    const remote = r.data;
+    const bundled = r.data;
 
     let persisted = [];
     try {
@@ -1075,24 +1061,24 @@
 
     const persistedIds = new Set((persisted || []).map((s) => s && s.id).filter(Boolean));
 
-    const normalizedRemote = (remote || []).map((it, i) => ({
-      id: typeof it.id === 'string' ? it.id : 'remote-' + i,
-      title: typeof it.title === 'string' ? it.title : 'Remote Snippet ' + (i + 1),
+    const normalizedBundled = (bundled || []).map((it, i) => ({
+      id: typeof it.id === 'string' ? it.id : 'bundle-' + i,
+      title: typeof it.title === 'string' ? it.title : 'Snippet ' + (i + 1),
       code: typeof it.code === 'string' ? it.code : '',
       expanded: false,
-      remoteSource: REMOTE_SNIPPETS_URL,
+      source: LOCAL_SNIPPETS_URL,
       localEdited: false
     }));
 
     const merged = Array.isArray(persisted) ? persisted.slice() : [];
-    normalizedRemote.forEach((rItem) => {
+    normalizedBundled.forEach((rItem) => {
       if (!persistedIds.has(rItem.id)) merged.push(rItem);
     });
 
     scripts = merged;
     try {
       await storageSet(STORAGE_KEY, JSON.stringify(scripts));
-      showToast(`Merged ${scripts.length} snippets (local + remote)`);
+      showToast(`Merged ${scripts.length} snippets (local + bundled)`);
     } catch (err) {
       console.error('[CPToolbox] failed to save merged snippets', err);
       showToast('Failed to persist merged snippets');
@@ -1102,8 +1088,7 @@
     // refresh palette results if open
     refreshPaletteResults();
   }
-
-  /**********************************************
+/**********************************************
    * UI CONTROLS (Width, Toggle)
    **********************************************/
   async function saveState() {
@@ -1156,7 +1141,7 @@
   function createPaletteElement() {
     const wrap = create('div', { class: 'cptbx-palette', 'aria-hidden': 'true' });
     const inputRow = create('div', { class: 'cptbx-palette-input' });
-    const input = create('input', { type: 'text', placeholder: 'Search commands and snippets…', 'aria-label': 'Command palette' });
+    const input = create('input', { type: 'text', placeholder: 'Search commands and snippets...', 'aria-label': 'Command palette' });
     inputRow.appendChild(input);
     const list = create('div', { class: 'cptbx-palette-list' });
     wrap.appendChild(inputRow);
@@ -1255,13 +1240,13 @@
     // Two fixed commands + snippets
     const commands = [
       { id: '__add__', kind: 'command', title: 'Add snippet', hint: 'Create a new snippet' },
-      { id: '__refresh__', kind: 'command', title: 'Refresh remote snippets', hint: 'Reload and merge remote snippets' }
+      { id: '__refresh__', kind: 'command', title: 'Refresh snippets', hint: 'Reload and merge packaged snippets' }
     ];
     const snippetsCandidates = (scripts || []).map((s) => ({
       id: s.id,
       kind: 'snippet',
       title: s.title || '(untitled)',
-      hint: s.remoteSource ? 'remote' : (s.localEdited ? 'local' : '')
+      hint: s.source ? 'bundled' : (s.localEdited ? 'local' : '')
     }));
     return commands.concat(snippetsCandidates);
   }
@@ -1326,7 +1311,7 @@
       }
       if (sel.id === '__refresh__') {
         closePalette();
-        await onRefreshRemote();
+        await onRefreshSnippets();
         return;
       }
     } else if (sel.kind === 'snippet') {
@@ -1366,7 +1351,7 @@
   await loadState();
   renderList((searchInput && searchInput.value) || '');
 
-  // ensure palette element reference if remote HTML added it
+  // ensure palette element reference if bundled HTML added it
   paletteEl = firstMatch(panel, ['.cptbx-palette']);
   if (paletteEl) {
     paletteInput = paletteEl.querySelector('input');
@@ -1375,5 +1360,5 @@
 
   // if user focuses the panel search and wants quick palette hint, optional: show hint (not shown by default)
 
-  console.log('[CPToolbox] Ready — Edit/Delete added. Toggle with Ctrl+RightClick. Command palette: Ctrl/Cmd+K');
+  console.log('[CPToolbox] Ready - assets loaded locally. Toggle with Ctrl+RightClick. Command palette: Ctrl/Cmd+K');
 })();

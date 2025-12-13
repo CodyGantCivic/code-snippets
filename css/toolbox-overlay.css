@@ -252,8 +252,41 @@
   z-index: 2147483650;
 }
 /* ===============================
-   Font Awesome alignment
+   Icon fallbacks (no external Font Awesome)
    =============================== */
+
+.fa-solid {
+  font-style: normal;
+  font-weight: 700;
+}
+
+.fa-solid::before {
+  display: inline-block;
+}
+
+.fa-code::before {
+  content: '</>';
+}
+
+.fa-arrow-rotate-right::before {
+  content: 'R';
+}
+
+.fa-plus::before {
+  content: '+';
+}
+
+.fa-magnifying-glass::before {
+  content: '?';
+}
+
+.fa-xmark::before {
+  content: 'x';
+}
+
+.fa-arrows-left-right::before {
+  content: '<>';
+}
 
 .cptbx-mark {
   font-size: 16px;
@@ -280,4 +313,3 @@
   margin-right: 4px;
   color: var(--muted);
 }
-
