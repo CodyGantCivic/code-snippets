@@ -1115,11 +1115,9 @@
     }
   });
 
+  // Keyboard shortcuts are scoped to when the panel is already visible
   document.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'p') {
-      e.preventDefault();
-      togglePanel();
-    }
+    if (!panelVisible) return;
     // Command/Ctrl + K opens command palette
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
       e.preventDefault();
