@@ -508,7 +508,8 @@
     const fallbackPanel = create('div', {
       id: 'cp-toolbox-panel',
       role: 'dialog',
-      'aria-hidden': 'true'
+      'aria-hidden': 'true',
+      style: { display: 'none' }
     });
 
     // HEADER (Apple-style default)
@@ -599,6 +600,7 @@
 
       const docPanel = document.getElementById('cp-toolbox-panel');
       if (!docPanel) throw new Error('failed to append bundled panel');
+      docPanel.style.display = 'none';
 
       // ensure palette exists (in case bundled HTML doesn't include it)
       if (!docPanel.querySelector('.cptbx-palette')) {
