@@ -1,36 +1,40 @@
 <div id="cp-toolbox-panel" role="dialog" aria-hidden="true">
- <header class="cptbx-header">
-  <div class="cptbx-brand">
-    <span class="cptbx-mark" aria-hidden="true">⌘</span>
-    <span class="cptbx-name">Snippet Box</span>
-  </div>
+  <header class="cptbx-header">
+    <div class="cptbx-brand">
+      <i class="fa-solid fa-code cptbx-mark" aria-hidden="true"></i>
+      <span class="cptbx-name">Snippet Box</span>
+    </div>
 
-  <div class="cptbx-actions">
-    <button
-      class="cptbx-btn cptbx-secondary cptbx-refresh-remote-btn"
-      aria-label="Refresh remote snippets"
-    >
-      Refresh
-    </button>
+    <div class="cptbx-actions">
+      <button
+        class="cptbx-btn cptbx-secondary cptbx-refresh-remote-btn"
+        aria-label="Refresh remote snippets"
+      >
+        <i class="fa-solid fa-arrow-rotate-right" aria-hidden="true"></i>
+        <span>Refresh</span>
+      </button>
 
-    <button
-      class="cptbx-btn cptbx-primary cptbx-add-snippet-btn"
-      aria-label="Add snippet"
-    >
-      Add
-    </button>
-  </div>
-</header>
-
+      <button
+        class="cptbx-btn cptbx-primary cptbx-add-snippet-btn"
+        aria-label="Add snippet"
+      >
+        <i class="fa-solid fa-plus" aria-hidden="true"></i>
+        <span>Add</span>
+      </button>
+    </div>
+  </header>
 
   <!-- Search -->
   <div class="cptbx-search">
+    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
     <input
       type="search"
       placeholder="Search snippets"
       aria-label="Search snippets"
     />
-    <button class="cptbx-clear-btn" aria-label="Clear search">×</button>
+    <button class="cptbx-clear-btn" aria-label="Clear search">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
   </div>
 
   <!-- List -->
@@ -39,6 +43,7 @@
   <!-- Footer -->
   <footer class="cptbx-footer">
     <label>
+      <i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i>
       Width
       <input
         type="number"
@@ -50,4 +55,5 @@
     </label>
   </footer>
 </div>
+
 
