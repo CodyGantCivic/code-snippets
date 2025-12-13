@@ -1,287 +1,254 @@
+/* ===============================
+   Design Tokens (Apple-style)
+   =============================== */
+
 :root {
-  --cp-accent: rgb(204, 0, 32);
-  --cp-muted: #667085;
+  --bg: #ffffff;
+  --bg-subtle: #f5f5f7;
+  --border: #d2d2d7;
+  --text: #1d1d1f;
+  --muted: #6e6e73;
+  --accent: #007aff;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+
+  --font: -apple-system, BlinkMacSystemFont,
+          "SF Pro Text", "SF Pro Display",
+          system-ui, sans-serif;
 }
 
-/* Everything scoped to the panel root to avoid bleed */
-#cp-toolbox-panel * {
-  box-sizing: border-box;
-  font-family: Inter, system-ui, Arial;
-}
+/* ===============================
+   Panel
+   =============================== */
 
-/* Main panel: fixed, resizable horizontally */
 #cp-toolbox-panel {
   position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  inset: 0 auto 0 0;
   width: 420px;
-  min-width: 220px;
-  max-width: 900px;
-  background: #fff;
-  border-right: 1px solid #e6edf8;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
   z-index: 2147483647;
   display: none;
-  overflow: auto;
-  padding: 8px;
-  resize: horizontal;
+
+  font-family: var(--font);
+  color: var(--text);
+
+  display: flex;
+  flex-direction: column;
 }
 
-/* Header (namespaced). kept headerTS class for compatibility */
-#cp-toolbox-panel .cptbx-header,
-#cp-toolbox-panel .headerTS {
+/* ===============================
+   Header
+   =============================== */
+
+.cptbx-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 10px 8px;
-  border-bottom: 1px solid #f1f5f9;
+
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
 }
 
-/* Logo container */
-#cp-toolbox-panel .cptbx-logo,
-#cp-toolbox-panel .logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#cp-toolbox-panel svg {
-  height: 64px;
+.cptbx-logo svg {
+  height: 32px;
   width: auto;
-  display: block;
-  max-width: 100%;
 }
 
-/* Button group wrapper (namespaced only) */
-#cp-toolbox-panel .cptbx-btns {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-end;
-  position: relative;
-  min-width: 120px;
-  user-select: none;
-}
+/* ===============================
+   Buttons
+   =============================== */
 
-/* Visible dropdown toggle (namespaced) */
-#cp-toolbox-panel .cptbx-btns-header,
-#cp-toolbox-panel .btns-headerTS {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  background: linear-gradient(180deg, rgba(204,0,32,0.04), rgba(255,255,255,0));
-  color: var(--cp-accent);
-  font-weight: 700;
-  cursor: pointer;
-  line-height: 1;
-}
-
-#cp-toolbox-panel .cptbx-btns-header:focus,
-#cp-toolbox-panel .cptbx-btns-header:focus-visible,
-#cp-toolbox-panel .cptbx-btns:focus-within .cptbx-btns-header {
-  outline: 2px solid rgba(204,0,32,0.15);
-  box-shadow: 0 6px 18px rgba(204,0,32,0.06);
-}
-
-/* Dropdown menu container (initially hidden) - namespaced */
-#cp-toolbox-panel .cptbx-btns-dropdown {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 8px);
-  min-width: 220px;
-  display: none;
-  flex-direction: column;
-  gap: 8px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #e9f0f6;
-  background: #fff;
-  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.06);
-  z-index: 2147483650;
-  transform-origin: top right;
-  transform: translateY(-6px) scale(0.98);
-  opacity: 0;
-  transition: transform 180ms ease, opacity 160ms ease;
-}
-
-/* Show the dropdown when `.open` class is applied on namespaced container */
-#cp-toolbox-panel .cptbx-btns.open .cptbx-btns-dropdown {
-  display: flex;
-  transform: translateY(0) scale(1);
-  opacity: 1;
-}
-
-/* Buttons inside dropdown (namespaced) */
-#cp-toolbox-panel .cptbx-btns-dropdown .cptbx-add-snippet-btn,
-#cp-toolbox-panel .cptbx-btns-dropdown .cptbx-refresh-remote-btn {
-  display: inline-flex;
-  width: 100%;
-  justify-content: center;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--cp-accent);
-  background: linear-gradient(180deg, rgba(204, 0, 32, 0.08), rgba(255, 255, 255, 0));
-  color: var(--cp-accent);
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-  line-height: 1;
-}
-
-#cp-toolbox-panel .cptbx-btns-dropdown .cptbx-add-snippet-btn:hover,
-#cp-toolbox-panel .cptbx-btns-dropdown .cptbx-refresh-remote-btn:hover {
-  box-shadow: 0 6px 18px rgba(204, 0, 32, 0.08);
-  transform: translateY(-1px);
-}
-
-/* Chevron rotation */
-#cp-toolbox-panel .chev {
-  opacity: 0.7;
-  font-size: 12px;
-  transition: transform 160ms ease;
-}
-#cp-toolbox-panel .cptbx-btns.open .chev {
-  transform: rotate(-180deg);
-}
-
-/* Search bar (namespaced) */
-#cp-toolbox-panel .cptbx-search-row,
-#cp-toolbox-panel .search-row {
+.cptbx-actions {
   display: flex;
   gap: 8px;
-  padding: 10px 6px;
-  border-bottom: 1px solid #f1f5f9;
-  align-items: center;
 }
 
-#cp-toolbox-panel .cptbx-search-row input,
-#cp-toolbox-panel .search-row input {
+.cptbx-btn {
+  appearance: none;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  padding: 6px 12px;
+
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.cptbx-btn:hover {
+  background: #eaeaed;
+}
+
+.cptbx-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.cptbx-primary:hover {
+  filter: brightness(0.95);
+}
+
+/* ===============================
+   Search
+   =============================== */
+
+.cptbx-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cptbx-search input {
   flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #e6eef9;
-  font-size: 14px;
-}
-
-#cp-toolbox-panel .cptbx-search-row .cptbx-clear-btn,
-#cp-toolbox-panel .search-row .clear-btn {
   padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #e6eef9;
-  background: white;
+  font-size: 13px;
+
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+
+.cptbx-search input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: #fff;
+}
+
+.cptbx-clear-btn {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  color: var(--muted);
   cursor: pointer;
 }
 
-/* Snippet card styling (namespaced) */
-#cp-toolbox-panel .cptbx-item {
-  border-radius: 8px;
-  padding: 8px;
-  background: #fbfdff;
-  border: 1px solid #f1f7ff;
-  margin-bottom: 8px;
+/* ===============================
+   List
+   =============================== */
+
+.cptbx-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
 }
 
-#cp-toolbox-panel .cptbx-row {
+/* Snippet Card */
+
+.cptbx-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+.cptbx-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
-#cp-toolbox-panel .cptbx-title {
-  cursor: pointer;
-  font-weight: 600;
-  color: #0f172a;
+.cptbx-title {
   flex: 1;
-}
-
-#cp-toolbox-panel .cptbx-copy {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid rgba(204, 0, 32, 0.35);
-  background: linear-gradient(180deg, rgba(204, 0, 32, 0.04), #f0f7ff);
-  color: var(--cp-accent);
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
 
-#cp-toolbox-panel .cptbx-copy:hover {
-  box-shadow: 0 4px 10px rgba(204, 0, 32, 0.06);
-  transform: translateY(-1px);
+.cptbx-copy {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  cursor: pointer;
 }
 
-#cp-toolbox-panel .cptbx-code {
+.cptbx-copy:hover {
+  background: #eaeaed;
+}
+
+/* Code Editor */
+
+.cptbx-code {
   display: none;
   width: 100%;
-  min-height: 120px;
-  margin-top: 8px;
+  margin-top: 10px;
   padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #e6eef9;
-  background: #fff;
-  font-family: ui-monospace, monospace;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+
+/* Actions */
+
+.cptbx-actions,
+.cptbx-actions button {
   font-size: 12px;
 }
 
-#cp-toolbox-panel .cptbx-actions {
+.cptbx-actions {
   display: none;
   margin-top: 8px;
-  gap: 8px;
-  align-items: center;
+  gap: 6px;
 }
 
-#cp-toolbox-panel .cptbx-save,
-#cp-toolbox-panel .cptbx-edit,
-#cp-toolbox-panel .cptbx-delete {
-  padding: 6px 10px;
-  border-radius: 6px;
-  background: #fff;
+.cptbx-save,
+.cptbx-edit,
+.cptbx-delete {
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
   cursor: pointer;
-  color: var(--cp-accent);
-  border: 1px solid rgba(204, 0, 32, 0.45);
-  font-weight: 600;
 }
 
-#cp-toolbox-panel .cptbx-edit {
-  border-color: rgba(0, 0, 0, 0.12);
-  color: #0f172a;
+.cptbx-delete {
+  color: #c62828;
 }
 
-#cp-toolbox-panel .cptbx-delete {
-  border-color: rgba(204, 0, 32, 0.65);
-  color: #a60a12;
-  background: linear-gradient(180deg, rgba(255, 240, 240, 0.6), #fff);
-}
+/* ===============================
+   Footer
+   =============================== */
 
-#cp-toolbox-panel .cptbx-save:hover,
-#cp-toolbox-panel .cptbx-edit:hover,
-#cp-toolbox-panel .cptbx-delete:hover {
-  box-shadow: 0 6px 16px rgba(204, 0, 32, 0.06);
-  transform: translateY(-1px);
-}
-
-#cp-toolbox-panel .cptbx-char {
-  margin-left: auto;
+.cptbx-footer {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
   font-size: 12px;
-  color: var(--cp-muted);
+  color: var(--muted);
 }
 
-/* Toast notification (scoped) */
-#cp-toolbox-panel #cp-toolbox-toast,
-#cp-toolbox-panel #cp-toolbox-toast * {
-  box-sizing: border-box;
+.cptbx-footer input {
+  margin-left: 6px;
+  width: 80px;
 }
-#cp-toolbox-panel #cp-toolbox-toast {
+
+/* ===============================
+   Toast
+   =============================== */
+
+#cp-toolbox-toast {
   position: fixed;
   right: 20px;
   bottom: 20px;
-  background: #111;
+
+  background: rgba(0, 0, 0, 0.85);
   color: #fff;
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
+
+  font-size: 13px;
   z-index: 2147483650;
-  border: 2px solid rgba(204, 0, 32, 0.85);
 }
+
