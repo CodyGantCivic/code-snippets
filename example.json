@@ -1,0 +1,148 @@
+[
+  {
+    "id": "carousel",
+    "title": "carosuel basics",
+    "category": "newsflash",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n.widget.skin70 .cpSlider{\n    display:flex;\n}\n.widget.skin45 .cpCarousel .arrow {\n    opacity: 1;\n} \n\n.widget.skin45 .cpCarousel .arrow.prev:before {\n    background: url() no-repeat;\n    background-size: contain;\n}\n\n.widget.skin45 .cpCarousel .arrow.next:before {\n    background: url() no-repeat;\n    background-size: contain;\n}\n\n.widget.skin45 .cpCarousel .arrow.prev:after {\n    border-right: none;\n}\n\n.widget.skin45 .cpCarousel .arrow.next:after {\n    border-left: none;\n}\n\n.widget.skin45 .cpCarousel .arrow:before{\n    border-radius:0 !important;\n    height:35px;\n    width:35px;\n}",
+    "hover": "",
+    "widgetOptions": [
+      "Carousel"
+    ],
+    "references": [],
+    "image": ""
+  },
+  {
+    "id": "slideshow",
+    "title": "slideshow",
+    "category": "slideshow",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n.widget.skin29 .cpSlider .overlayInner{\n    padding:1em;\n    background:rgba(19, 75, 112, 0.9);\n}\n.row.outer.wide .widget.skin29 .cpSlider .overlayInner{\n    border-radius:10px;\n}\n.widget.skin29 .cpSlider .overlay{\n    max-width:750px;\n    background:rgba(19, 75, 112, 0);\n}",
+    "hover": "",
+    "widgetOptions": [
+      "Slideshow"
+    ],
+    "references": [],
+    "image": ""
+  },
+  {
+    "id": "calendar",
+    "title": "calendar",
+    "category": "calendar",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n.widget.skin74 .miniCalendar th{\n    width:100%;  \n}\n.widget.skin74 .miniCalendar td{\n    width:100%;\n}\n.widget.skin74 .miniCalendar tr{\n    display:flex;  \n    align-items:center; \n    justify-content:center;\n    flex-direction:row;\n}",
+    "hover": "",
+    "widgetOptions": [
+      "Event List",
+      "Mini Calendar",
+      "Calendar Strip",
+      "Misc"
+    ],
+    "references": [],
+    "image": ""
+  },
+  {
+    "id": "nav-basics",
+    "title": "Nav Basics",
+    "category": "navitems",
+    "version": 1,
+    "readonly": false,
+    "code": "position:relative;\n}\n\n.wide .mainNavItem::after{\n    content:'';\n    position:absolute;\n    height:px;\n    width:px;\n    background-color:;\n    bottom:.8em;\n    left: 50%;\n    transform: translateX(-50%);\n    transition: all .3s ease-in-out;\n}\n\n.wide .mainNavItem:is(:hover, :focus, :active, .mouseover)::after {\n    width:;\n}",
+    "hover": "",
+    "widgetOptions": [
+      "Main Navigation"
+    ],
+    "references": [],
+    "image": ""
+  },
+  {
+    "id": "footer-lines",
+    "title": "footer Lines",
+    "category": "footer",
+    "version": 1,
+    "readonly": false,
+    "code": "line-height:1.2;\nposition: relative;\n}\n\n.wide.widget.skin66 .row {\n    display: table;\n    margin: 0 auto;\n}\n\n.wide.widget.skin66 .col:not(.last) .widgetItem::after {\n    content: '';\n    position: absolute;\n    right: -2px;\n    top: 50%;\n    transform: translateY(-50%);\n    width: 1px;\n    height: 16px;\n    background: #212121;\n    vertical-align: bottom;\n}\n.widget.skin66 .pageStyles p{\n    margin:0;\n}",
+    "hover": "",
+    "widgetOptions": [
+      "Page Styles"
+    ],
+    "references": [],
+    "image": ""
+  },
+  {
+    "id": "header-after",
+    "title": "Header ::After",
+    "category": "footer",
+    "version": 1,
+    "readonly": false,
+    "code": "position:relative;\n}\n.widget.skin12 .widgetHeader:after{\n    position:absolute;\n    content:\"\";\n    width:74px;\n    height:3px;\n    bottom:-7px;\n    left:0;\n    background:#FED318;\n}\n.row.outer:not(.wide) .widget.skin12 .widgetHeader::after {\n    left: 50%;\n    transform: translateX(-50%);\n}",
+    "hover": "",
+    "widgetOptions": [],
+    "references": [],
+    "image": ""
+  },
+  {
+    "id": "mega-menu-bullets",
+    "title": "mega menu - Bullets",
+    "category": "megamenu",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n\n.widget.skin62 .level1 > ol {\n    margin-left: 0;\n}\n\n.widget.skin62 .level1 .megaMenuItem {\n    margin-left: 4px;\n    padding: 4px 0 4px 8px;\n    line-height: 1.3;\n    position:relative;\n    transition: all .2s ease-in-out;\n}\n\n.widget.skin62 .level1 .megaMenuItem::after{\n    position:absolute;\n    content:\"\";\n    width:8px;\n    height:8px;\n    border-radius:50%;\n    bottom:0;\n    top:10px;\n    left:-6px;\n    background:#FFFCF7;\n}\n\n.widget.skin62 .level1 .megaMenuItem:is(:hover, :focus, :active):after {\n    background:#CEA35E;\n}",
+    "hover": "",
+    "widgetOptions": [
+      "Mega Menu"
+    ],
+    "references": [],
+    "image": ""
+  },
+  {
+    "id": "mega-menu-border",
+    "title": "mega menu - border",
+    "category": "megamenu",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n\n.widget.skin10 .level1 > ol {\n    margin-left: 0;\n}\n\n.widget.skin10 .level1 .megaMenuItem {\n    margin-left: 4px;\n    padding: 4px 0 4px 8px;\n    line-height: 1.3;\n    border-left: 2px solid #3EA84F;\n    transition: all .2s ease-in-out;\n}\n.widget.skin10 .level1 .megaMenuItem:is(:hover, :focus, :active){\n    border-left: 2px solid #FED318;\n}",
+    "hover": "",
+    "widgetOptions": [
+      "Mega Menu"
+    ],
+    "references": [],
+    "image": ""
+  },
+  {
+    "id": "carousel-height-readon",
+    "title": "carousel - height matched w readon at bottom",
+    "category": "newsflash",
+    "version": 1,
+    "readonly": false,
+    "code": "display:flex;\nflex-direction:column;\n}\n.widget.skin154 .cpSlider{\n    display:flex;\n}\n.widget.skin154 .text{\n    padding:1em;\n    padding-bottom:0;\n    position:relative;\n    display:flex;\n    flex-direction:column;\n    height:100%;\n}\n.widget.skin154 .widgetDesc{\n    display:flex;\n    flex-direction:column;\n    justify-content:space-between;\n    height:100%;\n}",
+    "hover": "",
+    "widgetOptions": [
+      "Carousel"
+    ],
+    "references": [],
+    "image": ""
+  },
+  {
+    "id": "popular-links",
+    "title": "Popular Links",
+    "category": "quicklinks",
+    "version": 1,
+    "readonly": false,
+    "code": "}\n.widget.skin70 .widgetItem a:not(.liveEditHandle){\n    display:flex;\n    min-height:85px;\n    transition:all .3s ease-in-out;\n    border-radius: 5px 10px 10px 5px;\n    background:url(/ImageRepository/Document?documentID=3534)right 10px center no-repeat, linear-gradient(90deg, #23607D 0%, #035C3E 100%);\n    flex-direction:column;\n    justify-content:center;\n    padding:.5em 1.2em .5em 73px;\n    position:relative;\n}\n.widget.skin70 .widgetItem a:not(.liveEditHandle)::after{\n    position:absolute;\n    transition:all .3s ease-in-out;\n    content:\"\";\n    left:30px;\n    bottom:50%;\n    transform:translateY(50%);\n    width:15px;\n    height:15px;\n    border-radius:50%;\n    background-color:rgba(255, 191, 90, 0);\n    border:2px solid #FFF;\n    box-sizing: border-box;\n}",
+    "hover": "}\n.widget.skin70 .widgetItem a:not(.liveEditHandle):is(:hover, :focus, :active)::after{\n    background-color:rgba(255, 191, 90, 1);\n}\n.widget.skin70 .widgetItem a:not(.liveEditHandle):is(:hover, :focus, :active){\n    background:url(/ImageRepository/Document?documentID=3534)right 18px center no-repeat, linear-gradient(90deg, #23607D 0%, #035C3E 100%);\n}",
+    "widgetOptions": [
+      "Quick Links"
+    ],
+    "references": [
+      {
+        "title": "Sheriffs Office",
+        "url": "https://www.kwc.gov/601/Sheriffs-Office"
+      }
+    ],
+    "image": "https://raw.githubusercontent.com/CodyGantCivic/code-snippets/main/assets/Screenshot%202026-01-02%20130519.png"
+  }
+]
