@@ -12,7 +12,7 @@
   {
     "id": "slideshow-basics",
     "title": "slideshow basics",
-    "category": "newsflash",
+    "category": "slideshow",
     "version": 1,
     "readonly": false,
     "code": "}\n.widget.skin29 .cpSlider .overlayInner{\n    padding:1em;\n    background:rgba(19, 75, 112, 0.9);\n}\n.row.outer.wide .widget.skin29 .cpSlider .overlayInner{\n    border-radius:10px;\n}\n.widget.skin29 .cpSlider .overlay{\n    max-width:750px;\n    background:rgba(19, 75, 112, 0);\n}",
@@ -72,7 +72,7 @@
   {
     "id": "header-after",
     "title": "Header ::After",
-    "category": "infoadvanced",
+    "category": "navitems",
     "version": 1,
     "readonly": false,
     "code": "position:relative;\n}\n.widget.skin12 .widgetHeader:after{\n    position:absolute;\n    content:\"\";\n    width:74px;\n    height:3px;\n    bottom:-7px;\n    left:0;\n    background:#FED318;\n}\n.row.outer:not(.wide) .widget.skin12 .widgetHeader::after {\n    left: 50%;\n    transform: translateX(-50%);\n}",
@@ -82,7 +82,6 @@
   {
     "id": "feature-column",
     "title": "Feature Column",
-    "category": "infoadvanced",
     "version": 1,
     "readonly": false,
     "code": "}\n\n@media (min-width: 63em) {\n    #featureColumn { \n        border-left: 1px solid #E4E4E4;\n        margin: 1.5em 0;\n    }\n}",
@@ -91,7 +90,7 @@
   },
   {
     "id": "mega-menu-bullets",
-    "title": "mega menu - Bullests",
+    "title": "mega menu - Bullets",
     "category": "megamenu",
     "version": 1,
     "readonly": false,
