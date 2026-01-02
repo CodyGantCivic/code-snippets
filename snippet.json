@@ -6,9 +6,14 @@
     "version": 1,
     "readonly": false,
     "code": "}\n.widget.skin70 .cpSlider{\n    display:flex;\n}\n.widget.skin45 .cpCarousel .arrow {\n    opacity: 1;\n} \n\n.widget.skin45 .cpCarousel .arrow.prev:before {\n    background: url() no-repeat;\n    background-size: contain;\n}\n\n.widget.skin45 .cpCarousel .arrow.next:before {\n    background: url() no-repeat;\n    background-size: contain;\n}\n\n.widget.skin45 .cpCarousel .arrow.prev:after {\n    border-right: none;\n}\n\n.widget.skin45 .cpCarousel .arrow.next:after {\n    border-left: none;\n}\n\n.widget.skin45 .cpCarousel .arrow:before{\n    border-radius:0 !important;\n    height:35px;\n    width:35px;\n}",
-    "references": [],
-    "image": ""
-  },
+     "references": [
+    {
+      "title": "Sheriffs Office",
+      "url": "https://www.kwc.gov/601/Sheriffs-Office"
+    }
+  ],
+  "image": "https://raw.githubusercontent.com/CodyGantCivic/code-snippets/main/assets/Screenshot%202026-01-02%20130519.png"
+},
   {
     "id": "slideshow-basics",
     "title": "slideshow basics",
